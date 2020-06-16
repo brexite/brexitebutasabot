@@ -1,0 +1,27 @@
+{
+  "name": "brexite_but_as_a_bot",
+  "version": "0.0.1",
+  "description": "The Cold War 1987",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "brexite",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/uws": "^10.149.0",
+    "canvas": "^2.6.1",
+    "discord.js": "^11.6.4",
+    "express": "^4.17.1",
+    "fs": "^0.0.2",
+    "ms": "^2.1.2",
+    "node-opus": "^0.2.7",
+    "opusscript": "^0.0.6",
+    "quick.db": "^7.1.1",
+    "superagent": "^5.2.2",
+    "ytdl-core": "^2.1.1"
+  },
+  "engines": {
+    "node": "8.12.0"
+  }
+}

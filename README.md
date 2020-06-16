@@ -1,2 +1,0 @@
-# brexitebutasabot
-Discord Bot
