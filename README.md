@@ -1,2 +1,7 @@
 # brexitebutasabot
-Discord Bot
+
+Literally the worst discord bot
+
+
+
+just look at it
