@@ -121,9 +121,9 @@ module.exports.run = async (bot, message, args) => {
 
         for(var j = 0; allChannels.length > j; j++) {
           if (names.includes(allChannels[j])){
-            open += "`" + message.guild.channels.get(allChannels[j]).name + "` "
-          } else {
             closed += "`" + message.guild.channels.get(allChannels[j]).name + "` "
+          } else {
+            open += "`" + message.guild.channels.get(allChannels[j]).name + "` "
           }
         }
 
