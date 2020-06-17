@@ -51,10 +51,8 @@ module.exports.run = async (bot, message, args) => {
       "brexite but as a bot"
     )
     .setColor(config.colour)
-    .addField('__'+config.prefix+'blacklist <optional channel ID>__',
-      'Blacklists the channel you are in, or as specified (Kick perms will override)')
-    .addField('__'+config.prefix+'whitelist <optional channel ID>__',
-      'Whitelists the channel you are in, or as specified (Kick perms will override)')
+    .addField('__'+config.prefix+'blacklist <add | remove | del | list> <optional channel ID | "all">__',
+      'Adds or removes the channel you are in, or as specified to the blacklist, or shows the current blacklist (Kick perms will override)')
     .setTimestamp()
     .setThumbnail("https://cdn.discordapp.com/attachments/354594007873224704/687775881464250387/maxresdefault_2.jpg")
     .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], "https://cdn.discordapp.com/app-icons/609326951592755211/db440b2935c9e563017568ec01ee43cd.png");
