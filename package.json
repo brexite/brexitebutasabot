@@ -1,7 +1,7 @@
 {
   "name": "brexite_but_as_a_bot",
-  "version": "0.0.1",
-  "description": "The Cold War 1987",
+  "version": "2.3.0",
+  "description": "Migrated to new VPS, Added multiserver abilities",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -22,6 +22,6 @@
     "ytdl-core": "^2.1.1"
   },
   "engines": {
-    "node": "8.12.0"
+    "node": "10.15.3"
   }
 }

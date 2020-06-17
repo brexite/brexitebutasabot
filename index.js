@@ -8,6 +8,8 @@ const app = express();
 const path = require("path");
 const certPath = path.join(__dirname, "./txt/footerArray.txt");
 const client = new Discord.Client();
+const serverPath = path.join(__dirname, "../txt/serverdata.json");
+const serverdata = require("./txt/serverdata.json");
 
 app.get("/", (request, response) => {
   // console.log(Date.now() + "Ping Received");
@@ -70,6 +72,11 @@ bot.on("message", async message => {
     );
     return;
   }
+    if (!serverdata[message.guild.id]) {
+      serverdata[message.guild.id] = {
+        blacklist: []
+      };
+    }  
     
     let content = message.content.split(" ");
     let command = content[0];
@@ -86,14 +93,14 @@ bot.on("message", async message => {
       if (urmom.length <= 1 || message.content.toLowerCase().includes('HTTP'.toLowerCase())) return;
       message.channel.send(urmom.join(" "));
     }
-  
 
     //checks if message contains a command and runs it
     if (!message.content.startsWith(prefix)) return;
     
     if (
-    config.channelWhitelist.includes(message.channel.id) ||
-    message.member.hasPermission('KICK_MEMBERS')
+    !serverdata[message.guild.id].blacklist.includes(message.channel.id) ||
+    message.member.hasPermission('KICK_MEMBERS') ||
+    message.member.id == config.ownerID
     ){
       
       let commandfile = bot.commands.get(command.slice(prefix.length));
