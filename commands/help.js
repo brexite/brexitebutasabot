@@ -51,7 +51,7 @@ module.exports.run = async (bot, message, args) => {
       "brexite but as a bot"
     )
     .setColor(config.colour)
-    .addField('__'+config.prefix+'whitelit <add | remove | del | list> <optional channel ID | "all">__',
+    .addField('__'+config.prefix+'whitelist <add | remove | del | list> <optional channel ID | "all">__',
       'Adds or removes the channel you are in, or as specified to the whitelist, or shows the current whlitelist (Kick perms will override)')
     .setTimestamp()
     .setThumbnail("https://cdn.discordapp.com/attachments/354594007873224704/687775881464250387/maxresdefault_2.jpg")
