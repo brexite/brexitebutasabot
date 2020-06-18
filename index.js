@@ -90,7 +90,7 @@ bot.on("message", async message => {
   
     if (message.content == "bruh") message.react('711047218575966219');
     
-    if ((message.content.startsWith("im doing") || message.content.startsWith("i'm doing")) || message.channel.id == "696525484183519272") {
+    if ((message.content.startsWith("im doing") || message.content.startsWith("i'm doing"))) {
       var urmom = content;
       urmom.splice(1, 1);
       if (urmom.length <= 1 || message.content.toLowerCase().includes('HTTP'.toLowerCase())) return;
