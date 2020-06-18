@@ -79,8 +79,7 @@ module.exports.run = async (bot, message, args) => {
 
         const index = whitelist.indexOf(channelid);
         if (channelid == "all") {
-          console.log("all")
-          whitelist.splice(0, whitelist.length);
+          console.log("all")          whitelist.splice(0, whitelist.length);
           fs.writeFile(serverPath, JSON.stringify(serverdata), (err) => {
             if (err) console.error(err)
           })
@@ -105,9 +104,6 @@ module.exports.run = async (bot, message, args) => {
           names[i] = JSON.stringify(message.guild.channels.get(whitelist[i]).id);
           names[i] = names[i].slice(1, -1);
         }
-
-        console.log(names);
-        console.log(allChannels);
 
         const embed = new Discord.RichEmbed()
         .setTitle("Random Lord")
