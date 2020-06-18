@@ -23,18 +23,12 @@ module.exports.run = async (bot, message, args) => {
     } else if (channelid.startsWith('<#') && channelid.endsWith('>')){
       channelid = channelid.slice(2, -1);
     } else if (channelid == "all") {
-      console.log("all has been spoken")
     } else if (message.guild.channels.exists('name', channelid)) {
-      console.log("lording")
       channelid = message.guild.channels.find('name', channelid).id
     } else {
-      console.log("not pog")
     }
 
-    console.log("channel tag" + channelid)
-
     if (!message.guild.channels.map(m => m.id).includes(channelid) && channelid != "all") {
-      console.log("FAKE");
       return;
     }
 
@@ -50,7 +44,6 @@ module.exports.run = async (bot, message, args) => {
     switch (action) {
       case 'add':
         if (channelid == "all") {
-          console.log("all")
           whitelist.splice(0, whitelist.length);
           let channels = message.guild.channels;
           for (const channel of channels.values()) 
@@ -62,10 +55,8 @@ module.exports.run = async (bot, message, args) => {
           })
           message.channel.send("All channels added to whitelist!")
         } else if (whitelist.includes(channelid)){
-          console.log("already here")
           message.channel.send("Error: Channel is already whitelist")
         } else {
-          console.log("added")
           whitelist.push(channelid);
           fs.writeFile(serverPath, JSON.stringify(serverdata), (err) => {
             if (err) console.error(err)
@@ -79,7 +70,6 @@ module.exports.run = async (bot, message, args) => {
 
         const index = whitelist.indexOf(channelid);
         if (channelid == "all") {
-          console.log("all")
           whitelist.splice(0, whitelist.length);
           fs.writeFile(serverPath, JSON.stringify(serverdata), (err) => {
             if (err) console.error(err)
@@ -87,13 +77,11 @@ module.exports.run = async (bot, message, args) => {
           message.channel.send("All channels removed from whitelist!")
         } else if (index > -1) {
           whitelist.splice(index, 1);
-          console.log("removed")
           fs.writeFile(serverPath, JSON.stringify(serverdata), (err) => {
             if (err) console.error(err)
           });
           message.channel.send("<#"+ channelid + "> removed from whitelist!")
         } else {
-          console.log("not here")
           message.channel.send("Error: Channel is not whitelisted")
         }
 
@@ -105,9 +93,6 @@ module.exports.run = async (bot, message, args) => {
           names[i] = JSON.stringify(message.guild.channels.get(whitelist[i]).id);
           names[i] = names[i].slice(1, -1);
         }
-
-        console.log(names);
-        console.log(allChannels);
 
         const embed = new Discord.RichEmbed()
         .setTitle("Random Lord")
