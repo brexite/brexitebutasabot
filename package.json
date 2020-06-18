@@ -1,7 +1,7 @@
 {
   "name": "brexite_but_as_a_bot",
-  "version": "2.3.1",
-  "description": "Migrated to new VPS, Added multiserver abilities",
+  "version": "2.3.2",
+  "description": "Whitelist added",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"

@@ -6,6 +6,10 @@ const certPath = path.join(__dirname, '../txt/log.txt');
 
 module.exports.run = async (bot, message, args) => {
   //this is where the actual code for the command goes
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
   let filename = args[0]
   let text = args.slice(1).join(" ");
   
@@ -49,12 +53,20 @@ module.exports.run = async (bot, message, args) => {
   writeStream.end();
   
   
-  const path = './output/'+filename+'.cfg';
-  message.channel.send("Here is your cfg.", {
+  let locate = path.join(__dirname, '../output/'+filename+'.cfg')
+  await message.channel.send("Here is your cfg.", {
     files: [
-      path,
+      locate,
     ]
   });
+  
+  sleep(100);
+  
+  try {
+    fs.unlinkSync(locate);
+  } catch (err) {
+    console.error(err)
+  }
   
 }
 //name this whatever the command name is.
