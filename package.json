@@ -1,6 +1,6 @@
 {
   "name": "brexite_but_as_a_bot",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "Migrated to new VPS, Added multiserver abilities",
   "main": "index.js",
   "scripts": {
