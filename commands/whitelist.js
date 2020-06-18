@@ -38,7 +38,7 @@ module.exports.run = async (bot, message, args) => {
       return;
     }
 
-    var blacklist = serverdata[message.guild.id].blacklist;
+    var whitelist = serverdata[message.guild.id].whitelist;
 
     var allChannels = [];
         let channels = message.guild.channels;
@@ -51,58 +51,58 @@ module.exports.run = async (bot, message, args) => {
       case 'add':
         if (channelid == "all") {
           console.log("all")
-          blacklist.splice(0, blacklist.length);
+          whitelist.splice(0, whitelist.length);
           let channels = message.guild.channels;
           for (const channel of channels.values()) 
           {
-            blacklist.push(channel.id);
+            whitelist.push(channel.id);
           }
           fs.writeFile(serverPath, JSON.stringify(serverdata), (err) => {
             if (err) console.error(err)
           })
-          message.channel.send("All channels added to blacklist!")
-        } else if (blacklist.includes(channelid)){
+          message.channel.send("All channels added to whitelist!")
+        } else if (whitelist.includes(channelid)){
           console.log("already here")
-          message.channel.send("Error: Channel is already blacklisted")
+          message.channel.send("Error: Channel is already whitelist")
         } else {
           console.log("added")
-          blacklist.push(channelid);
+          whitelist.push(channelid);
           fs.writeFile(serverPath, JSON.stringify(serverdata), (err) => {
             if (err) console.error(err)
           });
-          message.channel.send("<#"+ channelid + "> added to blacklist!")
+          message.channel.send("<#"+ channelid + "> added to whitelist!")
         }
         break;
       case 'delete':
       case 'remove':
       case 'del':
 
-        const index = blacklist.indexOf(channelid);
+        const index = whitelist.indexOf(channelid);
         if (channelid == "all") {
           console.log("all")
-          blacklist.splice(0, blacklist.length);
+          whitelist.splice(0, whitelist.length);
           fs.writeFile(serverPath, JSON.stringify(serverdata), (err) => {
             if (err) console.error(err)
           })
-          message.channel.send("All channels removed from blacklist!")
+          message.channel.send("All channels removed from whitelist!")
         } else if (index > -1) {
-          blacklist.splice(index, 1);
+          whitelist.splice(index, 1);
           console.log("removed")
           fs.writeFile(serverPath, JSON.stringify(serverdata), (err) => {
             if (err) console.error(err)
           });
-          message.channel.send("<#"+ channelid + "> removed from blacklist!")
+          message.channel.send("<#"+ channelid + "> removed from whitelist!")
         } else {
           console.log("not here")
-          message.channel.send("Error: Channel is not blacklisted")
+          message.channel.send("Error: Channel is not whitelisted")
         }
 
         break;
       case 'list':
 
         var names = [];
-        for (var i = 0; blacklist.length > i; i++) {
-          names[i] = JSON.stringify(message.guild.channels.get(blacklist[i]).id);
+        for (var i = 0; whitelist.length > i; i++) {
+          names[i] = JSON.stringify(message.guild.channels.get(whitelist[i]).id);
           names[i] = names[i].slice(1, -1);
         }
 
@@ -121,17 +121,17 @@ module.exports.run = async (bot, message, args) => {
 
         for(var j = 0; allChannels.length > j; j++) {
           if (names.includes(allChannels[j])){
-            closed += "`" + message.guild.channels.get(allChannels[j]).name + "` "
-          } else {
             open += "`" + message.guild.channels.get(allChannels[j]).name + "` "
+          } else {
+            closed += "`" + message.guild.channels.get(allChannels[j]).name + "` "
           }
         }
 
-        try {embed.addField("✅ Open Channels", open, true)} 
-        catch (err) {embed.addField("✅ Open Channels", "<No Open Channels>", true)}
+        try {embed.addField("🚫 Blocked Channels", closed, true)} 
+        catch (err) {embed.addField("🚫 Blocked Channels", "<No Blocked Channels>", true)}
 
-        try {embed.addField("🚫 Blacklisted", closed, true)}
-        catch (err) {embed.addField("🚫 Blacklisted", "<No Blacklisted Channels>", true)}
+        try {embed.addField("✅ Whitelisted", open, true)}
+        catch (err) {embed.addField("✅ Whitelisted", "<No Whitelisted Channels>", true)}
         embed.setTimestamp()
         .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], "https://cdn.discordapp.com/app-icons/609326951592755211/db440b2935c9e563017568ec01ee43cd.png");
         message.channel.send({ embed });
@@ -142,5 +142,5 @@ module.exports.run = async (bot, message, args) => {
 }
 //name this whatever the command name is.
 module.exports.help = {
-  name: "blacklist"
+  name: "whitelist"
 }

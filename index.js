@@ -1,3 +1,6 @@
+//git fetch --all
+//git reset --hard origin/master
+
 const Discord = require("discord.js");
 const config = require("./config.json");
 const bot = new Discord.Client();
@@ -74,7 +77,7 @@ bot.on("message", async message => {
   }
     if (!serverdata[message.guild.id]) {
       serverdata[message.guild.id] = {
-        blacklist: []
+        whitelist: []
       };
     }  
     
@@ -87,7 +90,7 @@ bot.on("message", async message => {
   
     if (message.content == "bruh") message.react('711047218575966219');
     
-    if ((message.content.startsWith("im doing") || message.content.startsWith("i'm doing")) && (config.channelWhitelist.includes(message.channel.id) || message.channel.id == "696525484183519272")) {
+    if ((message.content.startsWith("im doing") || message.content.startsWith("i'm doing")) || message.channel.id == "696525484183519272") {
       var urmom = content;
       urmom.splice(1, 1);
       if (urmom.length <= 1 || message.content.toLowerCase().includes('HTTP'.toLowerCase())) return;
@@ -98,7 +101,7 @@ bot.on("message", async message => {
     if (!message.content.startsWith(prefix)) return;
     
     if (
-    !serverdata[message.guild.id].blacklist.includes(message.channel.id) ||
+    serverdata[message.guild.id].whitelist.includes(message.channel.id) ||
     message.member.hasPermission('KICK_MEMBERS') ||
     message.member.id == config.ownerID
     ){
