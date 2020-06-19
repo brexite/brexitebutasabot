@@ -1,14 +1,13 @@
 //git fetch --all
 //git reset --hard origin/master
 
-const Discord = require("discord.js");
-const config = require("./config.json");
-const bot = new Discord.Client({ disableEveryone: true });
-const fs = require("fs");
-const http = require("http");
+const fs = require('fs');
+const Discord = require('discord.js');
 const express = require("express");
 const app = express();
+const http = require("http");
 const { prefix, token } = require('./config.json');
+const bot = new Discord.Client({ disableEveryone: true });
 const path = require("path");
 const certPath = path.join(__dirname, "./txt/footerArray.txt");
 const serverPath = path.join(__dirname, "../txt/serverdata.json");
@@ -120,4 +119,5 @@ bot.on('message', message => {
         }
     }
 });
+
 bot.login(token);

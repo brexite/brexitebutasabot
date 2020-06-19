@@ -8,7 +8,7 @@ module.exports = {
 
 module.exports.execute = async (bot, message, args) => {
   //this is where the actual code for the command goes
-    
+  
     const Discord = require('discord.js')
     const fs = require("fs");
     const path = require("path");
@@ -35,7 +35,7 @@ module.exports.execute = async (bot, message, args) => {
         channelid = message.guild.channels.find('name', channelid).id
       } else {
       }
-
+      
       if (!message.guild.channels.map(m => m.id).includes(channelid) && channelid != "all") {
         return;
       }
@@ -58,7 +58,7 @@ module.exports.execute = async (bot, message, args) => {
             {
               whitelist.push(channel.id);
             }
-            fs.writeFile(serverPath, JSON.stringify(serverdata), (err) => {
+            fs.writeFile(serverPath, JSON.stringify(serverdata, null, "\t"), (err) => {
               if (err) console.error(err)
             })
             message.channel.send("All channels added to whitelist!")
@@ -66,7 +66,7 @@ module.exports.execute = async (bot, message, args) => {
             message.channel.send("Error: Channel is already whitelist")
           } else {
             whitelist.push(channelid);
-            fs.writeFile(serverPath, JSON.stringify(serverdata), (err) => {
+            fs.writeFile(serverPath, JSON.stringify(serverdata, null, "\t"), (err) => {
               if (err) console.error(err)
             });
             message.channel.send("<#"+ channelid + "> added to whitelist!")
@@ -79,13 +79,13 @@ module.exports.execute = async (bot, message, args) => {
           const index = whitelist.indexOf(channelid);
           if (channelid == "all") {
             whitelist.splice(0, whitelist.length);
-            fs.writeFile(serverPath, JSON.stringify(serverdata), (err) => {
+            fs.writeFile(serverPath, JSON.stringify(serverdata, null, "\t"), (err) => {
               if (err) console.error(err)
             })
             message.channel.send("All channels removed from whitelist!")
           } else if (index > -1) {
             whitelist.splice(index, 1);
-            fs.writeFile(serverPath, JSON.stringify(serverdata), (err) => {
+            fs.writeFile(serverPath, JSON.stringify(serverdata, null, "\t"), (err) => {
               if (err) console.error(err)
             });
             message.channel.send("<#"+ channelid + "> removed from whitelist!")
