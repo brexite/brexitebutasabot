@@ -1,7 +1,7 @@
 {
   "name": "brexite_but_as_a_bot",
-  "version": "2.3.2",
-  "description": "Whitelist added",
+  "version": "3.0.0",
+  "description": "Bot rewrite, Aliasing added, help.js rewritten, README.md added among else",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"

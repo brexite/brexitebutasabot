@@ -1,69 +1,81 @@
-const Discord = require('discord.js')
-const fs = require("fs");
-const path = require("path");
-const certPath = path.join(__dirname, '../txt/footerArray.txt');
-let config = require('../config.json'),
-    colour = config.colour;
 
-module.exports.run = async (bot, message, args) => {
-  
-  let username = args.join(" ");
+module.exports = {
+	name: 'help',
+	description: 'List all of my commands or info about a specific command.',
+	aliases: ['commands'],
+	usage: 'help (command name)',
+  category: "Util",
+};
 
-  var text = fs.readFileSync(certPath, "utf-8");
-  var footerArray = text.split("\n")
-  
-  const embed = new Discord.RichEmbed()
-    .setTitle("yo heres some shit help")
-    .setAuthor(
-      "brexite but as a bot"
-    )
-    .setColor(config.colour)
-    .addField('__'+config.prefix+'help__',
-      'See '+config.prefix+'help')
-    .addField('__'+config.prefix+'nospam__',
-      'Easy way to stop people spamming')
-    .addField('__'+config.prefix+'p__',
-      'P')
-    .addField('__'+config.prefix+'poke__',
-      'Bot doesn\'t like it when you do that')
-    .addField('__'+config.prefix+'skin <MC Name>__',
-      'Finds a user\'s Minecraft skin')
-    .addField('__'+config.prefix+'spamcfg <filename> <long ass text>__',
-      'Creates a text spam config file from your input')
-    .addField('__'+config.prefix+'suggestion <text>__',
-      'Send me suggestions and funny quirky gifs to add to the bot')
-    .addField('__'+config.prefix+'vote <optional_duration> <question>?__',
-      'Creates a poll (default length 20s/ max length 1d)')
-    .setTimestamp()
-    .setThumbnail("https://cdn.discordapp.com/attachments/354594007873224704/687775881464250387/maxresdefault_2.jpg")
-    .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], "https://cdn.discordapp.com/app-icons/609326951592755211/db440b2935c9e563017568ec01ee43cd.png");
-  
-  const staffembed = new Discord.RichEmbed()
-    if (message.guild.id == "696515024746709003" || message.member.id == config.ownerID){
-      staffembed.addField('__'+config.prefix+'lord__',
-      'Generates 3 lords for use in House of Lords')
-      staffembed.addField('__'+config.prefix+'singlelord__',
-      'Generates a single lord for use in House of Lord (Depreciated)')
-    }
-  
-    staffembed.setTitle("more crap help")
-    .setAuthor(
-      "brexite but as a bot"
-    )
-    .setColor(config.colour)
-    .addField('__'+config.prefix+'whitelist <add | remove | del | list> <optional channel ID | "all">__',
-      'Adds or removes the channel you are in, or as specified to the whitelist, or shows the current whlitelist (Kick perms will override)')
-    .setTimestamp()
-    .setThumbnail("https://cdn.discordapp.com/attachments/354594007873224704/687775881464250387/maxresdefault_2.jpg")
-    .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], "https://cdn.discordapp.com/app-icons/609326951592755211/db440b2935c9e563017568ec01ee43cd.png");
+module.exports.execute = async (bot, message, args) => {
     
+  const Discord = require("discord.js");
+  const fs = require("fs");
+  const path = require("path");
+  const certPath = path.join(__dirname, '../txt/footerArray.txt');
+  let config = require('../config.json'),
+      colour = config.colour;
+    
+
+	const embed = new Discord.RichEmbed()
+		.setColor("#2C2F33")
+		.setAuthor(`${bot.user.username} Help`, bot.user.displayAvatarURL)
+		.setFooter(`Requested by ${message.author.tag} at`, message.author.displayAvatarURL)
+		.setTimestamp();
+	if (args[0]) {
+		let command = args[0];
+		if (bot.commands.has(command)) {
+			command = bot.commands.get(command);
+		}
+		else if (bot.aliases.has(command)) {
+			command = bot.commands.get(bot.aliases.get(command));
+		}
+		if(!command) return message.channel.send(embed.setTitle("Invalid Command.").setDescription(`Do \`${bot.config.prefix}help\` for the list of the commands.`));
+		embed.setTitle(`${command.name.slice(0, 1).toUpperCase() + command.name.slice(1)} command help`);
+		embed.setDescription([
+			`❯ **Command:** ${command.name.slice(0, 1).toUpperCase() + command.name.slice(1)}`,
+			`❯ **Description:** ${command.description || "No Description provided."}`,
+			`❯ **Usage:** ${command.usage ? `\`${config.prefix}${command.usage}\`` : "No Usage"} `,
+			`❯ **Aliases:** ${command.aliases ? command.aliases.join(", ") : "None"}`,
+			`❯ **Category:** ${command.category ? command.category : "General" || "Misc"}`,
+		].join("\n"));
+
+		return message.channel.send(embed);
+	}
+	const categories = fs.readdirSync("./commands/");
   
-  message.channel.send({ embed });
-  if (message.member.hasPermission('KICK_MEMBERS') || message.member.id == config.ownerID) {
-    message.channel.send({ embed: staffembed });
-  }
-}
-//name this whatever the command name is.
-module.exports.help = {
-  name: "help"
+	embed.setDescription([
+		`Available commands for ${bot.user.username}.`,
+		`The bot prefix is **${config.prefix}**`,
+		"`<>`means needed and `()` means optional",
+	].join("\n"));
+  var done = [];
+  var output = [];
+	categories.forEach(category => {
+    
+    category = bot.commands.get(category.substring(0, category.length - 3)).category;
+    
+		const dir = bot.commands.filter(c => c.category.toLowerCase() === category.toLowerCase());
+		const capitalise = category.slice(0, 1).toUpperCase() + category.slice(1);
+    
+		try {
+			if (dir.size === 0 || done.includes(`${capitalise}`)) return;
+      
+      done.push(`${capitalise}`);
+      output.push([`❯ ${capitalise}`, dir.map(c => `\`${c.name}\``).join(", ")])
+			// embed.addField(`❯ ${capitalise}`, dir.map(c => `\`${c.name}\``).join(", "));
+		}
+		catch (e) {
+			console.log(e);
+		}
+	});
+  
+  output = output.sort(function(a,b){ return a[0] > b[0] ? 1 : -1; });
+  
+  var i = 0;
+  output.forEach(element =>{
+    embed.addField(output[i][0].toString(),output[i][1].toString())
+    i++;
+  })
+	return message.channel.send(embed);
 }
