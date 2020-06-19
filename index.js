@@ -1,5 +1,5 @@
 //git fetch --all
-//git reset --hard origin/master
+//
 
 const fs = require('fs');
 const Discord = require('discord.js');
