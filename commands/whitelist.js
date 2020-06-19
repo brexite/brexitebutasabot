@@ -4,23 +4,21 @@ module.exports = {
 	usage: "whitelist <add | remove | del | list> <channel ID | all>",
 	category: "Admin",
   args: true,
-};
-
-module.exports.execute = async (bot, message, args) => {
+  execute: async (bot, message, args) => {
   //this is where the actual code for the command goes
   
     const Discord = require('discord.js')
     const fs = require("fs");
     const path = require("path");
     const certPath = path.join(__dirname, "../txt/footerArray.txt");
-    const serverPath = path.join(__dirname, "../txt/serverdata.json");
 
     var text = fs.readFileSync(certPath, "utf-8");
     var footerArray = text.split("\n"); // txt output of footerArray.txt
-    let config = require('../config.json'),
+      let config = require('../config.json'),
         colour = config.colour;
+    const serverPath = path.join(__dirname, "../txt/serverdata.json");
     const serverdata = require("../txt/serverdata.json");
-      if (message.member.hasPermission("KICK_MEMBERS")) {
+      if (message.member.hasPermission("KICK_MEMBERS") || config.ownerID.includes(message.member.id)) {
         JSON.parse(fs.readFileSync(serverPath, "utf8"));
 
       const action = args[0];
@@ -46,7 +44,7 @@ module.exports.execute = async (bot, message, args) => {
           let channels = message.guild.channels;
           for (const channel of channels.values()) 
           {
-            allChannels.push(channel.id);
+            if(channel.type === 'text') allChannels.push(channel.id);
           }
 
       switch (action) {
@@ -103,7 +101,7 @@ module.exports.execute = async (bot, message, args) => {
           }
 
           const embed = new Discord.RichEmbed()
-          .setTitle("Random Lord")
+          .setTitle("Server Whitelist")
           .setAuthor(
             "brexite but as a bot"
           )
@@ -132,4 +130,5 @@ module.exports.execute = async (bot, message, args) => {
         default: message.channel.send("you utter muppet, you absolute buffoon, enter a valid command")
       }
     }
+  }
 };

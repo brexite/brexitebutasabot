@@ -3,9 +3,7 @@ module.exports = {
 	description: "P",
 	usage: "p",
 	category: "Fun",
-};
-
-module.exports.execute = async (bot, message, args) => {
+  execute: async (bot, message, args) => {
     //this is where the actual code for the command goes
     const Discord = require('discord.js')
     const path = require("path");
@@ -31,4 +29,5 @@ module.exports.execute = async (bot, message, args) => {
       embed.setThumbnail("https://cdn.glitch.com/31aee208-edbd-49e7-83d9-b3a8ff155873%2Fp.png?v=1588550292078")
       .setFooter("p", "https://cdn.glitch.com/31aee208-edbd-49e7-83d9-b3a8ff155873%2Fp.png?v=1588550292078");
     message.channel.send({ embed });
+  }
 };
