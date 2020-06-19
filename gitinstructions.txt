@@ -1,0 +1,8 @@
+echo "config.json merge=ours 
+txt/serverdata merge=ours
+txt/humanevolution.txt merge=ours
+txt/log.txt merge=ours" > .gitattributes
+
+git config --global merge.ours.driver true
+git fetch --all
+git merge
