@@ -5,9 +5,7 @@ module.exports = {
 	aliases: ['commands'],
 	usage: 'help (command name)',
   category: "Util",
-};
-
-module.exports.execute = async (bot, message, args) => {
+  execute: async (bot, message, args) => {
     
   const Discord = require("discord.js");
   const fs = require("fs");
@@ -78,4 +76,5 @@ module.exports.execute = async (bot, message, args) => {
     i++;
   })
 	return message.channel.send(embed);
+  }
 }

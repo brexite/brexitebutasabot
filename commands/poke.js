@@ -3,9 +3,7 @@ module.exports = {
 	description: "See what happens idiot",
 	usage: "poke",
 	category: "Fun",
-};
-
-module.exports.execute = async (bot, message, args) => {
+  execute: async (bot, message, args) => {
     //this is where the actual code for the command goes
     const Discord = require('discord.js')
     const fs = require("fs");
@@ -26,4 +24,5 @@ module.exports.execute = async (bot, message, args) => {
     }
 
       message.channel.send(replyArray[Math.floor(Math.random()*replyArray.length)]);
+  }
 };

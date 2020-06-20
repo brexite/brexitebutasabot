@@ -4,9 +4,7 @@ module.exports = {
 	usage: "skin <username>",
 	category: "Game",
   args: true,
-};
-
-module.exports.execute = async (bot, message, args) => {
+  execute: async (bot, message, args) => {
     
     const Discord = require('discord.js')
     const fs = require("fs");
@@ -32,4 +30,5 @@ module.exports.execute = async (bot, message, args) => {
       .setTimestamp()
       .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)]);
     message.channel.send({ embed });
+  }
 };

@@ -4,9 +4,7 @@ module.exports = {
 	usage: "spamcfg <filename> <long ass text>",
 	category: "Game",
   args: true,
-};
-
-module.exports.execute = async (bot, message, args) => {
+  execute: async (bot, message, args) => {
     //this is where the actual code for the command goes
     
     
@@ -75,4 +73,5 @@ module.exports.execute = async (bot, message, args) => {
     } catch (err) {
       console.error(err)
     }
+  }
 };

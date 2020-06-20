@@ -4,9 +4,7 @@ module.exports = {
 	description: "Creates a poll for your specified time, has to contain a question mark at the end",
 	usage: "help (duration) <Poll topic>",
 	category: "Util",
-};
-
-module.exports.execute = async (bot, message, args) => {
+  execute: async (bot, message, args) => {
     const Discord = require("discord.js");
     const fs = require("fs");
     const path = require("path");
@@ -103,4 +101,5 @@ module.exports.execute = async (bot, message, args) => {
         "https://cdn.discordapp.com/app-icons/609326951592755211/db440b2935c9e563017568ec01ee43cd.png"
       );
     message.channel.send({ embed });
+  }
 }

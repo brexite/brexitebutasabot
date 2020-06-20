@@ -3,9 +3,7 @@ module.exports = {
 	description: "Lord Selection debug command (depreciated)",
 	usage: "singlelord",
 	category: "Admin",
-};
-
-module.exports.execute = async (bot, message, args) => {
+  execute: async (bot, message, args) => {
     const Discord = require('discord.js')
     const fs = require("fs");
     const path = require("path");
@@ -48,4 +46,5 @@ module.exports.execute = async (bot, message, args) => {
     } else {
       return;
     }
+  }
 };

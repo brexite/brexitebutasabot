@@ -5,20 +5,21 @@ module.exports = {
 	usage: "suggestion <text>",
 	category: "Util",
   args: true,
-};
-
-module.exports.execute = async (bot, message, args) => {
+  execute: async (bot, message, args) => {
   //this is where the actual code for the command goes
-    const Discord = require('discord.js')
-  const fs = require("fs");
-  const path = require("path");
-  const certPath = path.join(__dirname, '../txt/log.txt');
+  const Discord = require('discord.js')
+  let config = require("../config.json")
 
   let suggestion = args.slice(0).join(" ");
 
-  fs.appendFile(certPath, "\n" + suggestion, (err) => {
-    if (err) throw err;
-  });
-
-    message.channel.send("thats cool mate cheers");
+  let embed = new Discord.RichEmbed()
+  .addField("Suggestion", suggestion)
+  .setTimestamp()
+  .setColor(config.colour)
+  .setFooter(message.member.user.tag + " | " + message.guild.name, bot.user.avatarURL);
+  
+     bot.guilds.get(config.logsServer).channels.get("723404124955213854").send({ embed })
+    
+  message.channel.send("thats cool mate cheers");
+  }
 };
