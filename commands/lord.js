@@ -1,7 +1,7 @@
 module.exports = {
   name: "lord",
   description: "Picks the Lord of the Week [currently only for Podel Server]",
-  usage: "lord",
+  usage: "lord (blacklist) (add | remove | list) (tag)",
   category: "Admin"
 };
 
