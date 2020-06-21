@@ -122,7 +122,7 @@ module.exports.execute = async (bot, message, args) => {
       return;
     } else {
       let lordSelection = message.guild
-        // roles.get("696684182218473522")
+        .roles.get("696684182218473522")
         .members.map(m => m.user);
 
       lordArray = lordArray.slice(Math.max(lordArray.length - 18, 0));
