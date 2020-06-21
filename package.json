@@ -1,7 +1,7 @@
 {
   "name": "brexite_but_as_a_bot",
-  "version": "3.0.0",
-  "description": "Bot rewrite, Aliasing added, help.js rewritten, README.md added among else",
+  "version": "3.1.0",
+  "description": "Fixed +lord finally",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
