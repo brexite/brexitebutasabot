@@ -64,7 +64,7 @@ bot.on('message', message => {
         };
     }  
 
-	if (!message.content.startsWith(prefix) || message.author.bot) return;
+	if (message.author.bot) return;
 
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const commandName = args.shift().toLowerCase();
@@ -75,16 +75,16 @@ bot.on('message', message => {
     if (message.channel.id == "696714277272158319" && message.author.id == "172002275412279296") message.react('711047218575966219');
   
     if (message.content == "bruh") message.react('711047218575966219');
-    
+
     if ((message.content.startsWith("im doing") || message.content.startsWith("i'm doing"))) {
       var urmom = message.content;
-      urmom.splice(1, 1);
+      urmom = urmom.replace("doing ", "");;
       if (urmom.length <= 1 || message.content.toLowerCase().includes('HTTP'.toLowerCase())) return;
 
-      message.channel.send(urmom.join(" "));
+      message.channel.send(urmom);
     }
 
-	if (!command) return;
+	if (!command || !message.content.startsWith(prefix)) return;
 
     if (
         serverdata[message.guild.id].whitelist.includes(message.channel.id) ||
