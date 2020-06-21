@@ -27,15 +27,13 @@ module.exports.execute = async (bot, message, args) => {
       "KICK_MEMBERS" || config.ownerID.includes(message.member.id)
     )
   ) {
+    const serverPath = path.join(__dirname, "../txt/serverdata.json");
+    const serverdata = require("../txt/serverdata.json");
+    var bannedlords = serverdata[message.guild.id].bannedlords;
+    
     if (args[0] == "blacklist") {
-      const serverPath = path.join(__dirname, "../txt/serverdata.json");
-      const serverdata = require("../txt/serverdata.json");
       JSON.parse(fs.readFileSync(serverPath, "utf8"));
-
       const action = args[1];
-
-      var bannedlords = serverdata[message.guild.id].bannedlords;
-
       switch (action) {
         case "add":
           try {
@@ -123,38 +121,49 @@ module.exports.execute = async (bot, message, args) => {
       }
       return;
     } else {
-      let lordSelection = message.guild.roles
-        .get("696684182218473522")
+      let lordSelection = message.guild
+        // roles.get("696684182218473522")
         .members.map(m => m.user);
 
       lordArray = lordArray.slice(Math.max(lordArray.length - 18, 0));
       var i = 0;
-      var count = 0;
+      
+      
+      var ids = [];
+        for (var j = 0; bannedlords.length > j; j++) {
+          ids[j] = JSON.stringify(bannedlords[j]).slice(1, -1);
+        }
+      
+      ids.push(lordArray);      
+      // console.log("ids\n" + ids)
+
       while (i < 3) {
         var user =
           lordSelection[Math.floor(Math.random() * lordSelection.length)];
+        
+        var count = 0;
 
         while (
-          (lordArray.includes(`${user.id}`) == true ||
-            guild.members.get(`${user.id}`).hasPermission("KICK_MEMBERS") ||
-            lordID.includes(`${user.id}` == true)) &&
+          (ids.includes(user.id) ||
+            guild.members.get(user.id).hasPermission("KICK_MEMBERS")) &&
           count < 25
         ) {
+          lordArray.push(user)
           user =
             lordSelection[Math.floor(Math.random() * lordSelection.length)];
           count++;
         }
-
-        if (!user) return console.log("Error finding new lord");
+        // console.log(count)
+        // var check = ids.includes(user.id)
+        // console.log("Check\n________________\n"+ids[ids.length - 2]+" "+ typeof(ids[ids.length - 2]) + "\n" + user.id+" "+ typeof(user.id)+"\n________________\nIs equal = "+ check)
+        if (count >= 24) return console.log("Error finding new lord | Attempt: " + count);
         if (
-          lordArray.includes(`${user.id}`) == true ||
-          guild.members.get(`${user.id}`).hasPermission("KICK_MEMBERS") ||
-          lordID.includes(`${user.id}` == true)
+            ids.includes(user.id) ||
+            guild.members.get(user.id).hasPermission("KICK_MEMBERS")
         )
-          return console.log("Error finding new lord");
+          return message.channel.send("Error finding new lord | Find attempt: " + count);
 
         lordID.push(`${user.id}`);
-        console.log(lordID);
 
         const embed = new Discord.RichEmbed()
           .setTitle("Random Lord")
