@@ -18,6 +18,7 @@ module.exports.execute = async (bot, message, args) => {
   var lord = fs.readFileSync(lordPath, "utf-8");
   var footerArray = text.split("\n"); // txt output of footerArray.txt
   var lordArray = lord.split("\n"); // txt output of humanevolution.txt
+  var prevLords = lordArray
   var guild = message.guild;
   var authorID = message.author.id; // unused
   var lordID = []; // Array of chosen lords
@@ -121,9 +122,17 @@ module.exports.execute = async (bot, message, args) => {
       }
       return;
     } else {
-      let lordSelection = message.guild
+      try {
+        message.guild
         .roles.get("696684182218473522")
-        .members.map(m => m.user);
+        .members.map(m => m.user)
+      } catch {
+        message.channel.send ("This isn't a server that can use this command, sorry.")
+      }
+      
+      let lordSelection = message.guild
+        // .roles.get("696684182218473522")
+        .members.map(m => m.user)
 
       lordArray = lordArray.slice(Math.max(lordArray.length - 18, 0));
       var i = 0;
@@ -182,7 +191,7 @@ module.exports.execute = async (bot, message, args) => {
       }
 
       let lorder = await message.channel.send(
-        "Do you wish to make these people lords?"
+        "Do you wish to make these people lords? (30s)"
       );
 
       await lorder.react("✅");
@@ -192,7 +201,7 @@ module.exports.execute = async (bot, message, args) => {
       const results = await lorder.awaitReactions(
         reaction =>
           reaction.emoji.name === "✅" || reaction.emoji.name === "🚫",
-        { time: 10000 }
+        { time: 30000 }
       );
 
       var votesYes = results.get("✅");
@@ -218,9 +227,9 @@ module.exports.execute = async (bot, message, args) => {
         message.channel.send(
           "Vote failed `[Yes: " + votesYes + " | No: " + votesNo + "]`"
         );
-      else if (votesYes < 2)
+      else if (votesYes < 3)
         message.channel.send(
-          "Vote failed (requires 2 to pass) `[Yes: " +
+          "Vote failed (requires 3 to pass) `[Yes: " +
             votesYes +
             " | No: " +
             votesNo +
@@ -258,21 +267,27 @@ module.exports.execute = async (bot, message, args) => {
           t => t.name == "House of Lords"
         );
 
+        prevLords = prevLords.slice(-3)
+        // console.log("prevlords: " + prevLords)
         await message.guild.members.forEach(member => {
           if (
-            !member.roles.find(t => t.name == "House of Lords") ||
-            lordID.includes(member.id)
-          )
-            return;
+            member.roles.find(t => t.name == "House of Lords") &&
+            !lordID.includes(member.id) && 
+            prevLords.includes(member.id)
+          ){
           member.removeRole(role.id).then(
-            function() {
-              console.log(`Removed role from user ${member.user.tag}!`);
-            }.catch(error =>
+              console.log(`Removed role from user ${member.user.tag}!`)
+            ).catch(error =>
               message.channel.send(
                 "Failed to remove role to <@" + `${member.user.tag}` + ">"
               )
-            )
-          );
+            )}
+          
+          console.log(`\n-----------------------------${member.user.tag} `)
+          // if(member.roles.find(t => t.name == "House of Lords")) console.log(`${member.user.tag} has lord currently`)
+          // if(!lordID.includes(member.id)) console.log(`${member.user.tag} hasn't just been picked`)
+          // if(prevLords.includes(member.id)) console.log(`${member.user.tag} is in the last 3 lords`)
+          
         });
 
         var i = 0;

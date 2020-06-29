@@ -11,6 +11,8 @@ module.exports = {
   const fs = require("fs");
   const path = require("path");
   const certPath = path.join(__dirname, '../txt/footerArray.txt');
+  var text = fs.readFileSync(certPath, "utf-8");
+  var footerArray = text.split("\n")
   let config = require('../config.json'),
       colour = config.colour;
     
@@ -18,7 +20,7 @@ module.exports = {
 	const embed = new Discord.RichEmbed()
 		.setColor("#2C2F33")
 		.setAuthor(`${bot.user.username} Help`, bot.user.displayAvatarURL)
-		.setFooter(`Requested by ${message.author.tag} at`, message.author.displayAvatarURL)
+		.setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], message.author.displayAvatarURL)
 		.setTimestamp();
 	if (args[0]) {
 		let command = args[0];
