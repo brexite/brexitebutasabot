@@ -11,24 +11,20 @@ module.exports = {
     //message.channel.send('https://cdn.glitch.com/48b7f59d-ed30-4a81-932f-c52986aa6b02%2F7daysfree.gif?v=1591405740033');
 
     if (args[0] == "add") {
-      image = args[1];
-      var toAdd = {
-        img = image,
-        author = message.author.id,
-        created = Date.getTime()
-      }
+      var image = args[1];
       fs.readFile('../resources/tag.json', json, 'utf8', function readFileCallback(err, data){
         if (err){
             console.log(err);
         } else {
-          obj = JSON.parse(data);
-          var toAdd = {
-            img =  args[1],
-            author = message.author.id,
-            created = Date.getTime()
-          }
+          var obj = JSON.parse(data);
+          obj.table.push({
+            tag: args[1],
+            img: "Test",
+            author: message.author.id,
+            time: Date.getTime()
+          })
           obj.push(toAdd)
-          json = JSON.stringify(obj);
+          var json = JSON.stringify(obj);
           fs.writeFile('myjsonfile.json', json, 'utf8', callback); // write it back 
       }});
     }
