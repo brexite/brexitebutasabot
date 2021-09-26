@@ -9,7 +9,7 @@ module.exports = {
     const Discord = require('discord.js')
     const fs = require("fs");
     const path = require("path");
-    const certPath = path.join(__dirname, '../txt/footerArray.txt');
+    const certPath = path.join(__dirname, '../resources/footerArray.txt');
     let config = require('../config.json'),
         colour = config.colour;
   

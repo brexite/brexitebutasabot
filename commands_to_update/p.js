@@ -7,7 +7,7 @@ module.exports = {
     //this is where the actual code for the command goes
     const Discord = require('discord.js')
     const path = require("path");
-    const certPath = path.join(__dirname, "../txt/footerArray.txt");
+    const certPath = path.join(__dirname, "../resources/footerArray.txt");
     let config = require('../config.json'),
         colour = config.colour;
     

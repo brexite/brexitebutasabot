@@ -8,7 +8,7 @@ module.exports = {
     const Discord = require('discord.js')
     const fs = require("fs");
     const path = require("path");
-    const certPath = path.join(__dirname, '../txt/replyArray.txt');
+    const certPath = path.join(__dirname, '../resources/replyArray.txt');
     let config = require("../config.json");
 
     var text = fs.readFileSync(certPath, "utf-8");

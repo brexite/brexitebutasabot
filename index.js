@@ -7,7 +7,7 @@ const path = require("path");
 const app = express();
 const bot = new Discord.Client({ disableMentions: 'everyone' });
 
-const text = fs.readFileSync(path.join(__dirname, "./txt/replyArray.txt"), "utf-8");
+const text = fs.readFileSync(path.join(__dirname, "./resources/replyArray.txt"), "utf-8");
 const replyArray = text.split("\n");
 
 //ENV
@@ -52,15 +52,7 @@ bot.on('message', message => {
   const command = bot.commands.get(commandName)
     || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
-  if (message.content == "bruh") message.react('891716288576122910');
-
-  if ((message.content.startsWith("im doing") || message.content.startsWith("i'm doing"))) {
-    var urmom = message.content;
-    urmom = urmom.replace("doing ", "");;
-    if (urmom.length <= 1 || message.content.toLowerCase().includes('HTTP'.toLowerCase())) return;
-
-    message.channel.send(urmom);
-  }
+  funnyMessage(message);
 
   if (!command || !message.content.startsWith(prefix)) return;
 
@@ -87,5 +79,17 @@ bot.on('message', message => {
     }
   }
 });
+
+function funnyMessage(commandMessage) {
+  if (commandMessage.content == "bruh") message.react('891716288576122910');
+
+  if ((commandMessage.content.startsWith("im doing") || commandMessage.content.startsWith("i'm doing"))) {
+    var urmom = commandMessage.content;
+    urmom = urmom.replace("doing ", "");;
+    if (urmom.length <= 1 || commandMessage.content.toLowerCase().includes('HTTP'.toLowerCase())) return;
+
+    commandMessage.channel.send(urmom);
+  }
+};
 
 bot.login(token);

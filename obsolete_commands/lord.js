@@ -9,8 +9,8 @@ module.exports.execute = async (bot, message, args) => {
   const Discord = require("discord.js");
   const fs = require("fs");
   const path = require("path");
-  const certPath = path.join(__dirname, "../txt/footerArray.txt");
-  const lordPath = path.join(__dirname, "../txt/humanevolution.txt");
+  const certPath = path.join(__dirname, "../resources/footerArray.txt");
+  const lordPath = path.join(__dirname, "../resources/humanevolution.txt");
   let config = require("../config.json"),
     colour = config.colour;
 
@@ -28,8 +28,8 @@ module.exports.execute = async (bot, message, args) => {
       "KICK_MEMBERS" || config.ownerID.includes(message.member.id)
     )
   ) {
-    const serverPath = path.join(__dirname, "../txt/serverdata.json");
-    const serverdata = require("../txt/serverdata.json");
+    const serverPath = path.join(__dirname, "../resources/serverdata.json");
+    const serverdata = require("../resources/serverdata.json");
     var bannedlords = serverdata[message.guild.id].bannedlords;
     
     if (args[0] == "blacklist") {

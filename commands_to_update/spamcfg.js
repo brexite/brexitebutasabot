@@ -11,7 +11,7 @@ module.exports = {
     const Discord = require('discord.js')
     const fs = require("fs");
     const path = require("path");
-    const certPath = path.join(__dirname, '../txt/log.txt');
+    const certPath = path.join(__dirname, '../resources/log.txt');
     function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }

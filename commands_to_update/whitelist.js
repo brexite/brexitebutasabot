@@ -10,14 +10,14 @@ module.exports = {
     const Discord = require('discord.js')
     const fs = require("fs");
     const path = require("path");
-    const certPath = path.join(__dirname, "../txt/footerArray.txt");
+    const certPath = path.join(__dirname, "../resources/footerArray.txt");
 
     var text = fs.readFileSync(certPath, "utf-8");
     var footerArray = text.split("\n"); // txt output of footerArray.txt
       let config = require('../config.json'),
         colour = config.colour;
-    const serverPath = path.join(__dirname, "../txt/serverdata.json");
-    const serverdata = require("../txt/serverdata.json");
+    const serverPath = path.join(__dirname, "../resources/serverdata.json");
+    const serverdata = require("../resources/serverdata.json");
       if (message.member.hasPermission("KICK_MEMBERS") || config.ownerID.includes(message.member.id)) {
         JSON.parse(fs.readFileSync(serverPath, "utf8"));
 
