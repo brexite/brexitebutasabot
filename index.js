@@ -1,13 +1,8 @@
-//git fetch --all
-//git reset --hard origin/master
-
 const fs = require('fs');
 const Discord = require('discord.js');
 const express = require("express");
 const app = express();
 const http = require("http");
-const prefix = process.env.PREFIX;
-const token = process.env.TOKEN;
 const bot = new Discord.Client({ disableEveryone: true });
 const path = require("path");
 const certPath = path.join(__dirname, "./txt/replyArray.txt");
@@ -15,6 +10,10 @@ const serverPath = path.join(__dirname, "../txt/serverdata.json");
 const serverdata = require("./txt/serverdata.json");
 const text = fs.readFileSync(certPath, "utf-8");
 const replyArray = text.split("\n");
+
+//ENV
+const prefix = process.env.PREFIX;
+const token = process.env.TOKEN;
 
 bot.commands = new Discord.Collection();
 
