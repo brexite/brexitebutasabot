@@ -44,14 +44,7 @@ bot.on('message', message => {
         );
         return;
       }
-
-    if (!serverdata[message.guild.id]) {
-        serverdata[message.guild.id] = {
-          lords:[],
-          whitelist: []
-        };
-    }  
-
+      
 	if (message.author.bot) return;
 
 	const args = message.content.slice(prefix.length).split(/ +/);
