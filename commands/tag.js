@@ -23,7 +23,6 @@ module.exports = {
             author: message.author.id,
             time: Date.getTime()
           })
-          obj.push(toAdd)
           var json = JSON.stringify(obj);
           fs.writeFile('myjsonfile.json', json, 'utf8', callback); // write it back 
       }});
