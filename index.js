@@ -25,6 +25,7 @@ for (const file of commandFiles) {
 }
 
 bot.on("ready", async () => {
+  console.log(bot.user.username + " is online.");
   bot.user.setPresence({
     status: "online",
     activity: {
@@ -32,8 +33,6 @@ bot.on("ready", async () => {
       type: "PLAYING"
     }
   });
-
-  console.log(bot.user.username + " is online.");
 });
 
 bot.on('message', message => {
