@@ -15,16 +15,6 @@ const serverdata = require("./txt/serverdata.json");
 const text = fs.readFileSync(certPath, "utf-8");
 const replyArray = text.split("\n");
 
-app.get("/", (request, response) => {
-    // console.log(Date.now() + "Ping Received");
-    response.sendStatus(200);
-  });
-  app.listen(process.env.PORT);
-  setInterval(() => {
-    http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-  }, 280000);
-
-
 bot.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -36,14 +26,13 @@ for (const file of commandFiles) {
 }
 
 bot.on("ready", async () => {
-    bot.user.setStatus("available");
-    bot.user.setPresence({
-      game: {
-        name: "bro im driving",
-        type: "STREAMING",
-        url: "https://www.twitch.tv/brexite"
-      }
-    });
+  bot.user.setPresence({
+    status: "online",
+    activity: {
+      name: "BUY APPLE SHARES",
+      type: "PLAYING"
+    }
+  });
   
     console.log(bot.user.username + " is online.");
   });
@@ -72,8 +61,6 @@ bot.on('message', message => {
 	const command = bot.commands.get(commandName)
 		|| bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
-    if (message.channel.id == "696714277272158319" && message.author.id == "172002275412279296") message.react('711047218575966219');
-  
     if (message.content == "bruh") message.react('711047218575966219');
 
     if ((message.content.startsWith("im doing") || message.content.startsWith("i'm doing"))) {
@@ -87,7 +74,6 @@ bot.on('message', message => {
 	if (!command || !message.content.startsWith(prefix)) return;
 
     if (
-        serverdata[message.guild.id].whitelist.includes(message.channel.id) ||
         message.member.hasPermission('KICK_MEMBERS') ||
         message.member.id == bot.ownerID
     ){
