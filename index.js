@@ -52,7 +52,7 @@ bot.on('message', message => {
   const command = bot.commands.get(commandName)
     || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
-  if (message.content == "bruh") message.react('<:mitacry:770106018737946676>');
+  if (message.content == "bruh") message.react(bot.emojis.cache.get('770106018737946676'));
 
   if ((message.content.startsWith("im doing") || message.content.startsWith("i'm doing"))) {
     var urmom = message.content;
