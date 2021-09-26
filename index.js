@@ -1,14 +1,13 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const express = require("express");
-const app = express();
 const http = require("http");
-const bot = new Discord.Client({ disableEveryone: true });
 const path = require("path");
-const certPath = path.join(__dirname, "./txt/replyArray.txt");
-const serverPath = path.join(__dirname, "../txt/serverdata.json");
-const serverdata = require("./txt/serverdata.json");
-const text = fs.readFileSync(certPath, "utf-8");
+
+const app = express();
+const bot = new Discord.Client({ disableMentions: 'everyone' });
+
+const text = fs.readFileSync(path.join(__dirname, "./txt/replyArray.txt"), "utf-8");
 const replyArray = text.split("\n");
 
 //ENV
