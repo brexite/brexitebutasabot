@@ -12,7 +12,7 @@ module.exports = {
 
     if (args[0] == "add") {
       var image = args[1];
-      fs.readFile('../resources/tag.json', json, 'utf8', function readFileCallback(err, data){
+      fs.readFile('../assets/tag.json', json, 'utf8', function readFileCallback(err, data){
         if (err){
             console.log(err);
         } else {

@@ -7,7 +7,7 @@ const path = require("path");
 const app = express();
 const bot = new Discord.Client({ disableMentions: 'everyone' });
 
-const text = fs.readFileSync(path.join(__dirname, "./resources/replyArray.txt"), "utf-8");
+const text = fs.readFileSync(path.join(__dirname, "./assets/replyArray.txt"), "utf-8");
 const replyArray = text.split("\n");
 
 //ENV
