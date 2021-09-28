@@ -9,17 +9,17 @@
   "author": "brexite",
   "license": "ISC",
   "dependencies": {
+    "better-sqlite3": "^7.1.0",
     "canvas": "^2.6.1",
     "discord.js": "^13.1.0",
     "express": "^4.17.1",
     "fs": "^0.0.2",
     "ms": "^2.1.2",
-    "quick.db": "^7.1.2",
-    "superagent": "^5.2.2",
-    "ytdl-core": "^2.1.1",
-    "better-sqlite3": "^7.1.0",
     "node-fetch": "^2.6.1",
-    "readline-sync": "^1.4.10"
+    "quick.db": "^7.1.2",
+    "readline-sync": "^1.4.10",
+    "superagent": "^5.2.2",
+    "ytdl-core": "^2.1.1"
   },
   "engines": {
     "node": "16.9.1"

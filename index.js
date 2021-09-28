@@ -5,7 +5,7 @@ const http = require("http");
 const path = require("path");
 
 const app = express();
-const bot = new Discord.Client({ disableMentions: 'everyone' });
+const bot = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"], disableMentions: 'everyone' });
 
 const text = fs.readFileSync(path.join(__dirname, "./assets/replyArray.txt"), "utf-8");
 const replyArray = text.split("\n");
