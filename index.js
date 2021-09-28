@@ -61,7 +61,7 @@ bot.on('messageCreate', message => {
 
   if (!serverdata[message.guild.id]) {
     serverdata[message.guild.id] = {
-      vcChannels:[],
+      vcChannel:[],
       vcRole:[]
     };
   } 
@@ -104,7 +104,7 @@ bot.on('messageCreate', message => {
 );
 
 function funnyMessage(commandMessage) {
-  if (commandMessage.content == "bruh") message.react('891716288576122910');
+  if (commandMessage.content == "bruh") commandMessage.react('891716288576122910');
 
   if ((commandMessage.content.startsWith("im doing") || commandMessage.content.startsWith("i'm doing"))) {
     var urmom = commandMessage.content;
