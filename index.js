@@ -1,114 +1,118 @@
-//git fetch --all
-//git reset --hard origin/master
-
 const fs = require('fs');
 const Discord = require('discord.js');
 const express = require("express");
-const app = express();
 const http = require("http");
-const { prefix, token } = require('./config.json');
-const bot = new Discord.Client({ disableEveryone: true });
 const path = require("path");
-const certPath = path.join(__dirname, "./txt/replyArray.txt");
-const serverPath = path.join(__dirname, "../txt/serverdata.json");
-const serverdata = require("./txt/serverdata.json");
-const text = fs.readFileSync(certPath, "utf-8");
+
+require('dotenv').config();
+
+const app = express();
+const bot = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"], disableMentions: 'everyone' });
+
+const text = fs.readFileSync(path.join(__dirname, "./assets/replyArray.txt"), "utf-8");
 const replyArray = text.split("\n");
+const serverdata = require("./assets/serverdata.json");
 
-app.get("/", (request, response) => {
-    // console.log(Date.now() + "Ping Received");
-    response.sendStatus(200);
-  });
-  app.listen(process.env.PORT);
-  setInterval(() => {
-    http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-  }, 280000);
-
+//ENV
+const prefix = process.env.PREFIX;
+const token = process.env.TOKEN;
 
 bot.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    console.log(`${file} loaded!`);
-	bot.commands.set(command.name, command);
+  const command = require(`./commands/${file}`);
+  console.log(`${file} loaded!`);
+  bot.commands.set(command.name, command);
 }
 
 bot.on("ready", async () => {
-    bot.user.setStatus("available");
-    bot.user.setPresence({
-      game: {
-        name: "bro im driving",
-        type: "STREAMING",
-        url: "https://www.twitch.tv/brexite"
-      }
-    });
-  
-    console.log(bot.user.username + " is online.");
+  console.log(bot.user.username + " is online.");
+  bot.user.setPresence({
+    status: "online",
+    activities: [{
+      name: "BUY APPLE SHARES",
+      type: "PLAYING"
+    }]
   });
+});
 
-bot.on('message', message => {
-    
-    if (message.channel.type === "dm") {
-        message.author.send(
-          replyArray[Math.floor(Math.random() * replyArray.length)]
-        );
-        return;
+//VC Chat Role
+bot.on('voiceStateUpdate', (oldState, newState) => {
+  if(newState.channel) {
+    let role = newState.guild.roles.cache.find(role => role.id == serverdata[newState.guild.id].vcRole);
+    newState.member.roles.add(role).catch(console.error);
+  }
+  else if (oldState.channel){
+    let role = oldState.guild.roles.cache.find(role => role.id == serverdata[oldState.guild.id].vcRole);
+    oldState.member.roles.remove(role).catch(console.error);
+  }
+})
+
+bot.on('messageCreate', message => {
+
+  if (message.channel.type === "dm") {
+    message.author.send(
+      replyArray[Math.floor(Math.random() * replyArray.length)]
+    );
+    return;
+  }
+
+  if (!serverdata[message.guild.id]) {
+    serverdata[message.guild.id] = {
+      vcChannels:[],
+      vcRole:[]
+    };
+  } 
+
+  if (message.author.bot) return;
+
+  const args = message.content.slice(prefix.length).split(/ +/);
+  const commandName = args.shift().toLowerCase();
+
+  const command = bot.commands.get(commandName)
+    || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+
+  funnyMessage(message);
+
+  if (!command || !message.content.startsWith(prefix)) return;
+
+  //if (
+    //message.member.permission.has(Permission.FLAGS.KICK_MEMBERS) ||
+    //message.member.id == bot.ownerID
+  //) {
+
+    if (command.args && !args.length) {
+      let reply = `You didn't provide any arguments, ${message.author}!`;
+
+      if (command.usage) {
+        reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
       }
 
-    if (!serverdata[message.guild.id]) {
-        serverdata[message.guild.id] = {
-          lords:[],
-          whitelist: []
-        };
-    }  
-
-	if (message.author.bot) return;
-
-	const args = message.content.slice(prefix.length).split(/ +/);
-	const commandName = args.shift().toLowerCase();
-
-	const command = bot.commands.get(commandName)
-		|| bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-
-    if (message.channel.id == "696714277272158319" && message.author.id == "172002275412279296") message.react('711047218575966219');
-  
-    if (message.content == "bruh") message.react('711047218575966219');
-
-    if ((message.content.startsWith("im doing") || message.content.startsWith("i'm doing"))) {
-      var urmom = message.content;
-      urmom = urmom.replace("doing ", "");;
-      if (urmom.length <= 1 || message.content.toLowerCase().includes('HTTP'.toLowerCase())) return;
-
-      message.channel.send(urmom);
+      return message.channel.send(reply);
     }
 
-	if (!command || !message.content.startsWith(prefix)) return;
-
-    if (
-        serverdata[message.guild.id].whitelist.includes(message.channel.id) ||
-        message.member.hasPermission('KICK_MEMBERS') ||
-        message.member.id == bot.ownerID
-    ){
-
-        if (command.args && !args.length) {
-    		let reply = `You didn't provide any arguments, ${message.author}!`;
-
-            if (command.usage) {
-                reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
-            }
-
-            return message.channel.send(reply);
-        }
-
-        try {
-            command.execute(bot, message, args);
-        } catch (error) {
-            console.error(error);
-            message.reply('ah ive lost the fucking command sorry');
-        }
+    try {
+      command.execute(bot, message, args);
+    } catch (error) {
+      console.error(error);
+      message.reply('ah ive lost the fucking command sorry');
     }
-});
+  }
+//}
+);
+
+function funnyMessage(commandMessage) {
+  if (commandMessage.content == "bruh") message.react('891716288576122910');
+
+  if ((commandMessage.content.startsWith("im doing") || commandMessage.content.startsWith("i'm doing"))) {
+    var urmom = commandMessage.content;
+    urmom = urmom.replace("doing ", "");;
+    if (urmom.length <= 1 || commandMessage.content.toLowerCase().includes('HTTP'.toLowerCase())) return;
+
+    commandMessage.channel.send(urmom);
+  }
+};
 
 bot.login(token);

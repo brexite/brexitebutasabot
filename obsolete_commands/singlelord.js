@@ -7,8 +7,8 @@ module.exports = {
     const Discord = require('discord.js')
     const fs = require("fs");
     const path = require("path");
-    const certPath = path.join(__dirname, "../txt/footerArray.txt");
-    const lordPath = path.join(__dirname, '../txt/humanevolution.txt');
+    const certPath = path.join(__dirname, "../assets/footerArray.txt");
+    const lordPath = path.join(__dirname, '../assets/humanevolution.txt');
     let config = require('../config.json'),
         colour = config.colour;
 

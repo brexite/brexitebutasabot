@@ -11,7 +11,7 @@ module.exports = {
   let config = require("../config.json")
   const fs = require("fs");
   const path = require("path");
-  const replyPath = path.join(__dirname, "../txt/replyArray.txt");
+  const replyPath = path.join(__dirname, "../assets/replyArray.txt");
   
   if (!message.member.hasPermission("KICK_MEMBERS") && !config.ownerID.includes(message.member.id)) return;
 

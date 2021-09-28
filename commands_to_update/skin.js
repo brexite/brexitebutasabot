@@ -19,16 +19,16 @@ module.exports = {
     var footerArray = text.split("\n")
 
 
-    const embed = new Discord.MessageEmbed()
+    const embed = new Discord.RichEmbed()
       .setTitle("https://mine.ly/" + username + ".1")
       .setAuthor(
-        "Here is your minecraft skin!",
-        "https://cdn.discordapp.com/attachments/612022828782452746/892398497821765652/Grass-Block-600x600.png"
+        "brexite but as a bot",
+        "https://cdn.discordapp.com/app-icons/609326951592755211/db440b2935c9e563017568ec01ee43cd.png"
       )
       .setColor(config.colour)
       .setThumbnail("https://minotar.net/avatar/" + username + ".png")
       .setTimestamp()
       .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)]);
-    message.channel.send({embeds: [embed]});
+    message.channel.send({ embed });
   }
 };

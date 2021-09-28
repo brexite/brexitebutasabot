@@ -1,3 +1,4 @@
+
 module.exports = {
 	name: 'help',
 	description: 'List all of my commands or info about a specific command.',
@@ -5,8 +6,6 @@ module.exports = {
 	usage: 'help (command name)',
   category: "Util",
   execute: async (bot, message, args) => {
-
-	console.log("fuck off")
     
   const Discord = require("discord.js");
   const fs = require("fs");
@@ -18,8 +17,8 @@ module.exports = {
       colour = config.colour;
     
 
-	const embed = new Discord.MessageEmbed()
-		.setColor("#4f1110")
+	const embed = new Discord.RichEmbed()
+		.setColor("#2C2F33")
 		.setAuthor(`${bot.user.username} Help`, bot.user.displayAvatarURL)
 		.setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], message.author.displayAvatarURL)
 		.setTimestamp();
@@ -31,12 +30,12 @@ module.exports = {
 		else if (bot.aliases.has(command)) {
 			command = bot.commands.get(bot.aliases.get(command));
 		}
-		if(!command) return message.channel.send(embed.setTitle("Invalid Command.").setDescription(`Do \`${process.env.PREFIX}help\` for the list of the commands.`));
+		if(!command) return message.channel.send(embed.setTitle("Invalid Command.").setDescription(`Do \`${bot.config.prefix}help\` for the list of the commands.`));
 		embed.setTitle(`${command.name.slice(0, 1).toUpperCase() + command.name.slice(1)} command help`);
 		embed.setDescription([
 			`❯ **Command:** ${command.name.slice(0, 1).toUpperCase() + command.name.slice(1)}`,
 			`❯ **Description:** ${command.description || "No Description provided."}`,
-			`❯ **Usage:** ${command.usage ? `\`${process.env.PREFIX}${command.usage}\`` : "No Usage"} `,
+			`❯ **Usage:** ${command.usage ? `\`${config.prefix}${command.usage}\`` : "No Usage"} `,
 			`❯ **Aliases:** ${command.aliases ? command.aliases.join(", ") : "None"}`,
 			`❯ **Category:** ${command.category ? command.category : "General" || "Misc"}`,
 		].join("\n"));
@@ -47,7 +46,7 @@ module.exports = {
   
 	embed.setDescription([
 		`Available commands for ${bot.user.username}.`,
-		`The bot prefix is **${process.env.PREFIX}**`,
+		`The bot prefix is **${config.prefix}**`,
 		"`<>`means needed and `()` means optional",
 	].join("\n"));
   var done = [];
@@ -78,6 +77,6 @@ module.exports = {
     embed.addField(output[i][0].toString(),output[i][1].toString())
     i++;
   })
-	return message.channel.send({embeds: [embed]});
+	return message.channel.send(embed);
   }
 }
