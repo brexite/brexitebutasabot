@@ -24,7 +24,7 @@ module.exports = {
   var replyArray = text.split("\n")
 
   let embed = new Discord.MessageEmbed()
-  .setAuthor("Reply #" + String(replyArray.length - 1), bot.user.avatarURL({ dynamic:true }))
+  .setAuthor("Reply #" + String(replyArray.length), bot.user.avatarURL({ dynamic:true }))
   .addField("New Reply added: ", reply)
   .setTimestamp()
   .setColor(config.colour)
