@@ -4,11 +4,14 @@ const express = require("express");
 const http = require("http");
 const path = require("path");
 
+require('dotenv').config();
+
 const app = express();
-const bot = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"], disableMentions: 'everyone' });
+const bot = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"], disableMentions: 'everyone' });
 
 const text = fs.readFileSync(path.join(__dirname, "./assets/replyArray.txt"), "utf-8");
 const replyArray = text.split("\n");
+const serverdata = require("./assets/serverdata.json");
 
 //ENV
 const prefix = process.env.PREFIX;
@@ -28,14 +31,26 @@ bot.on("ready", async () => {
   console.log(bot.user.username + " is online.");
   bot.user.setPresence({
     status: "online",
-    activity: {
+    activities: [{
       name: "BUY APPLE SHARES",
       type: "PLAYING"
-    }
+    }]
   });
 });
 
-bot.on('message', message => {
+//VC Chat Role
+bot.on('voiceStateUpdate', (oldState, newState) => {
+  if(newState.channel) {
+    let role = newState.guild.roles.cache.find(role => role.id == serverdata[newState.guild.id].vcRole);
+    newState.member.roles.add(role).catch(console.error);
+  }
+  else if (oldState.channel){
+    let role = oldState.guild.roles.cache.find(role => role.id == serverdata[oldState.guild.id].vcRole);
+    oldState.member.roles.remove(role).catch(console.error);
+  }
+})
+
+bot.on('messageCreate', message => {
 
   if (message.channel.type === "dm") {
     message.author.send(
@@ -43,6 +58,13 @@ bot.on('message', message => {
     );
     return;
   }
+
+  if (!serverdata[message.guild.id]) {
+    serverdata[message.guild.id] = {
+      vcChannels:[],
+      vcRole:[]
+    };
+  } 
 
   if (message.author.bot) return;
 
@@ -56,10 +78,10 @@ bot.on('message', message => {
 
   if (!command || !message.content.startsWith(prefix)) return;
 
-  if (
-    message.member.hasPermission('KICK_MEMBERS') ||
-    message.member.id == bot.ownerID
-  ) {
+  //if (
+    //message.member.permission.has(Permission.FLAGS.KICK_MEMBERS) ||
+    //message.member.id == bot.ownerID
+  //) {
 
     if (command.args && !args.length) {
       let reply = `You didn't provide any arguments, ${message.author}!`;
@@ -78,7 +100,8 @@ bot.on('message', message => {
       message.reply('ah ive lost the fucking command sorry');
     }
   }
-});
+//}
+);
 
 function funnyMessage(commandMessage) {
   if (commandMessage.content == "bruh") message.react('891716288576122910');
