@@ -1,79 +1,109 @@
 module.exports = {
-    name: 'vcrole',
-    description: 'Sets a role to be used in VC chat - Use this command in the VC channel required',
-    usage: 'ping <role-id> | ping <@Role>',
-    category: "Util",
-    execute: async (bot, message, args) => {
-      
-      const fs = require("fs");
-      const path = require("path");
-      const serverPath = path.join(__dirname, "../assets/serverdata.json");
-      const serverdata = require("../assets/serverdata.json");
+  name: 'vcrole',
+  description: 'Sets a role to be used in VC chat - Use this command in the VC channel required',
+  usage: '<deleteChannel | deleteRole | info | setChannel | setRole>',
+  category: "Util",
+  execute: async (bot, message, args) => {
 
-        if (args[1]) {
-            var vcRole = serverdata[message.guild.id].vcRole;
-            var vcChannels = serverdata[message.guild.id].vcChannels;
+    const fs = require("fs");
+    const path = require("path");
+    const serverPath = path.join(__dirname, "../assets/serverdata.json");
+    const serverdata = require("../assets/serverdata.json");
 
-            JSON.parse(fs.readFileSync(serverPath, "utf8"));
-            const action = args[0];
+    if (args[0]) {
+      var vcRole = serverdata[message.guild.id].vcRole;
+      var vcChannel = serverdata[message.guild.id].vcChannel;
 
-            switch (action) {
-                case "setRole":
-                  try {
-                    var thisRole = args[1];
-                  } catch {
-                    message.channel.send("Error: No role specified");
-                  }
-                  if (!thisRole) {
-                    break;
-                  }
-                  if (vcRole.includes(thisRole)) {
-                    message.channel.send("Error: Role already added");
-                  } else {
-                    vcRole.push(thisRole);
-                    fs.writeFile(
-                      serverPath,
-                      JSON.stringify(serverdata, null, "\t"),
-                      err => {
-                        if (err) console.error(err);
-                      }
-                    );
-                    message.channel.send("Success!");
-                  }
-                  break;
+      JSON.parse(fs.readFileSync(serverPath, "utf8"));
+      const action = args[0];
 
-                  case "setChannel":
-                    try {
-                      var thisChannel = args[1];
-                    } catch {
-                      message.channel.send("Error: No channel specified");
-                    }
-                    if (!thisChannel) {
-                      break;
-                    }
-                    if (vcChannels.includes(thisChannel)) {
-                      message.channel.send("Error: Channel already added");
-                    } else {
-                      vcChannels.push(thisChannel);
-                      fs.writeFile(
-                        serverPath,
-                        JSON.stringify(serverdata, null, "\t"),
-                        err => {
-                          if (err) console.error(err);
-                        }
-                      );
-                      message.channel.send("Success!");
-                    }
-                    break;
+      switch (action) {
+        case "setRole":
+          try {
+            var thisRole = args[1];
+          } catch {
+            message.channel.send("Error: No role specified");
+          }
+          if (!thisRole) {
+            break;
+          }
+          if (vcRole.includes(thisRole)) {
+            message.channel.send("Error: Role already added");
+          } else {
+            vcRole.push(thisRole);
+            fs.writeFile(
+              serverPath,
+              JSON.stringify(serverdata, null, "\t"),
+              err => {
+                console.error(err);
+              }
+            );
+            message.channel.send("Success!");
+          }
+          break;
 
-                case "delete":
-                case "remove":
-                case "del":
-        
-                  break;
-                case "list":
-                  
-                  }
-        }
+        case "setChannel":
+          try {
+            var thisChannel = args[1];
+          } catch {
+            message.channel.send("Error: No channel specified");
+          }
+          if (!thisChannel) {
+            break;
+          }
+          if (vcChannel) {
+            message.channel.send("Error: Channel already added");
+          } else {
+            vcChannel.push(thisChannel);
+            fs.writeFile(
+              serverPath,
+              JSON.stringify(serverdata, null, "\t"),
+              err => {
+                console.error(err);
+              }
+            );
+            message.channel.send("Success!");
+          }
+          break;
+
+        case "deleteChannel":
+        case "removeChannel":
+        case "delChannel":
+          if (vcChannel.length() > 0) {
+            vcChannel.shift();
+            fs.writeFile(
+              serverPath,
+              JSON.stringify(serverdata, null, "\t"),
+              err => {
+                console.error(err);
+              }
+            );
+            message.channel.send("Success!");
+          } else {
+            message.channel.send("Error: No channel exists");
+          }
+          break;
+        case "deleteRole":
+        case "removeRole":
+        case "delRole":
+          if (vcRole.length() > 0) {
+            vcRole.shift();
+            fs.writeFile(
+              serverPath,
+              JSON.stringify(serverdata, null, "\t"),
+              err => {
+                console.error(err);
+              }
+            );
+            message.channel.send("Success!");
+          } else {
+            message.channel.send("Error: No channel exists");
+          }
+          break;
+        case "list":
+
+          break;
+      }
     }
+  }
 }

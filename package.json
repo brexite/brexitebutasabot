@@ -1,6 +1,6 @@
 {
   "name": "brexite_but_as_a_bot",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Added addreply",
   "main": "index.js",
   "scripts": {
