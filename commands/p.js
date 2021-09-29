@@ -15,7 +15,7 @@ module.exports = {
     var random = [Math.ceil(Math.random() * 25)];
 
     message.channel.send("p");
-    const embed = new Discord.RichEmbed()
+    const embed = new Discord.MessageEmbed()
       .setTitle("p")
       .setDescription("p")
       .setAuthor("p", "https://cdn.glitch.com/31aee208-edbd-49e7-83d9-b3a8ff155873%2Fp.png?v=1588550292078")
@@ -28,6 +28,6 @@ module.exports = {
       }
       embed.setThumbnail("https://cdn.glitch.com/31aee208-edbd-49e7-83d9-b3a8ff155873%2Fp.png?v=1588550292078")
       .setFooter("p", "https://cdn.glitch.com/31aee208-edbd-49e7-83d9-b3a8ff155873%2Fp.png?v=1588550292078");
-    message.channel.send({ embed });
+    message.channel.send({embeds: [embed]});
   }
 };

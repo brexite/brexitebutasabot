@@ -1,6 +1,6 @@
 {
   "name": "brexite_but_as_a_bot",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Updating commands to DJS13",
   "main": "index.js",
   "scripts": {

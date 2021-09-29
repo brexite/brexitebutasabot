@@ -1,12 +1,10 @@
 module.exports = {
-	name: 'help',
-	description: 'List all of my commands or info about a specific command.',
-	aliases: ['commands'],
-	usage: 'help (command name)',
+  name: 'help',
+  description: 'List all of my commands or info about a specific command.',
+  aliases: ['commands'],
+  usage: 'help (command name)',
   category: "Util",
   execute: async (bot, message, args) => {
-
-	console.log("fuck off")
     
   const Discord = require("discord.js");
   const fs = require("fs");
@@ -20,8 +18,8 @@ module.exports = {
 
 	const embed = new Discord.MessageEmbed()
 		.setColor("#4f1110")
-		.setAuthor(`${bot.user.username} Help`, bot.user.displayAvatarURL)
-		.setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], message.author.displayAvatarURL)
+		.setAuthor(`${bot.user.username} Help`, bot.user.displayAvatarURL({ dynamic:true }))
+		.setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], message.author.displayAvatarURL({ dynamic:true }))
 		.setTimestamp();
 	if (args[0]) {
 		let command = args[0];
@@ -41,7 +39,7 @@ module.exports = {
 			`❯ **Category:** ${command.category ? command.category : "General" || "Misc"}`,
 		].join("\n"));
 
-		return message.channel.send(embed);
+		return message.channel.send({embeds: [embed]});
 	}
 	const categories = fs.readdirSync("./commands/");
   
