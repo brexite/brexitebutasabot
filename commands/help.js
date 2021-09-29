@@ -41,7 +41,7 @@ module.exports = {
 			`❯ **Category:** ${command.category ? command.category : "General" || "Misc"}`,
 		].join("\n"));
 
-		return message.channel.send(embed);
+		return message.channel.send({embeds: [embed]});
 	}
 	const categories = fs.readdirSync("./commands/");
   
