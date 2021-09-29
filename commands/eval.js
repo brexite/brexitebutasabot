@@ -2,12 +2,17 @@ module.exports = {
   name: "eval",
   description: "Run code in discord",
   aliases: ["run"],
-  usage: "eval <args>",
+  usage: "<args>",
   category: "Bot Owner",
+  args: true,
   execute: async (bot, message, args) => {
     const Discord = require("discord.js");
     let config = require("../config.json"),
       colour = config.colour;
+
+    const path = require("path");
+    const fs = require("fs");
+    var footerArray = fs.readFileSync(path.join(__dirname, '../assets/footerArray.txt'), "utf-8").split("\n")
 
     const clean = text => {
       if (typeof text === "string")
@@ -28,14 +33,18 @@ module.exports = {
         let embed = new Discord.MessageEmbed()
           .addField("Input", `\`\`\`${args.join(" ")}\`\`\``)
           .addField("Output", `\`\`\`${clean(evaled)}\`\`\``)
-          .setColor(colour);
+          .setColor(colour)
+          .setTimestamp()
+          .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], message.author.displayAvatarURL({ dynamic:true }));
 
         message.channel.send({embeds: [embed]});
       } catch (err) {
         let embed = new Discord.MessageEmbed()
           .addField("Input", `\`\`\`${args.join(" ")}\`\`\``)
           .addField("Error", `\`\`\`xl\n${clean(err)}\n\`\`\``)
-          .setColor(colour);
+          .setColor(colour)
+          .setTimestamp()
+          .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], message.author.displayAvatarURL({ dynamic:true }));
 
         message.channel.send({embeds: [embed]});
       }

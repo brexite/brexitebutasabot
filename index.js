@@ -1,5 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
+const { Permissions } = require('discord.js');
 const express = require("express");
 const http = require("http");
 const path = require("path");
@@ -13,10 +14,14 @@ const bot = new Discord.Client({  intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_V
 const text = fs.readFileSync(path.join(__dirname, "./assets/replyArray.txt"), "utf-8");
 const replyArray = text.split("\n");
 const serverdata = require("./assets/serverdata.json");
+const { Channel } = require('diagnostics_channel');
 
 //ENV
 const prefix = process.env.PREFIX;
 const token = process.env.TOKEN;
+const botonChannel = process.env.BOTONCHANNEL;
+const logsServer = process.env.LOGSSERVER;
+const botOwnerId = process.env.BOTOWNERID
 
 bot.commands = new Discord.Collection();
 
@@ -30,6 +35,9 @@ for (const file of commandFiles) {
 
 bot.on("ready", async () => {
   console.log(bot.user.username + " is online.");
+  bot.guilds.cache.get(logsServer).channels.cache.get(botonChannel)
+    .send(`**[${new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')} UTC]** - BOT ONLINE.`)
+
   bot.user.setPresence({
     status: "online",
     activities: [{
@@ -84,6 +92,22 @@ bot.on('messageCreate', message => {
     //message.member.id == bot.ownerID
   //) {
 
+    if(command.category === "Admin" && !message.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
+      return message.channel.send("You don't have permissions to use this command - Users with Kick Perms Only")
+      .then(msg => {
+        setTimeout(() => msg.delete(), 10000)
+      })
+      .catch(console.error);
+    }
+
+    if(command.category === "Bot Owner" && message.member.id != botOwnerId) {
+      return message.channel.send("You don't have permissions to use this command - Bot Owners Only")
+      .then(msg => {
+        setTimeout(() => msg.delete(), 10000)
+      })
+      .catch(console.error);
+    }
+    
     if (command.args && !args.length) {
       let reply = `You didn't provide any arguments, ${message.author}!`;
 
@@ -91,7 +115,11 @@ bot.on('messageCreate', message => {
         reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
       }
 
-      return message.channel.send(reply);
+      return message.channel.send(reply)
+      .then(msg => {
+        setTimeout(() => msg.delete(), 10000)
+      })
+      .catch(console.error);
     }
 
     try {

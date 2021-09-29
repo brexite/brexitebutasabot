@@ -29,12 +29,12 @@ module.exports = {
     if (!message.content.includes("?"))
       return message.reply("Include a ? in your vote!");
 
-    await sleep (100);
+    await sleep(100);
     await message.delete();
 
     var theQuestion;
 
-    let voteEmbed = new Discord.RichEmbed();
+    let voteEmbed = new Discord.MessageEmbed();
 
     if (ms(args[0])) {
       theQuestion = args.slice(1).join(" ");
@@ -53,7 +53,7 @@ module.exports = {
         "https://cdn.discordapp.com/app-icons/609326951592755211/db440b2935c9e563017568ec01ee43cd.png"
       );
 
-    const voteTopic = await message.channel.send(voteEmbed);
+    const voteTopic = await message.channel.send({embeds: [voteEmbed]});
     var shitNumber = Math.floor(Math.random() * agree.length);
     currentAgree = agree[shitNumber];
     currentDisagree = disagree[shitNumber];
@@ -86,20 +86,15 @@ module.exports = {
 
     voteTopic.delete();
 
-    const embed = new Discord.RichEmbed()
+    const embed = new Discord.MessageEmbed()
       .setTitle(theQuestion)
       .setAuthor("brexite but as a bot")
       .setColor(config.colour)
       .addField("YES", votesYes + ` Votes`, true)
       .addField("NO", votesNo + ` Votes`, true)
       .setTimestamp()
-      .setThumbnail(
-        "https://cdn.discordapp.com/attachments/354594007873224704/527816017288626176/JPEG_20181221_213802.jpg"
-      )
-      .setFooter(
-        footerArray[Math.floor(Math.random() * footerArray.length)],
-        "https://cdn.discordapp.com/app-icons/609326951592755211/db440b2935c9e563017568ec01ee43cd.png"
-      );
-    message.channel.send({ embed });
+      .setThumbnail("https://cdn.discordapp.com/attachments/354594007873224704/527816017288626176/JPEG_20181221_213802.jpg")
+      .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], message.author.displayAvatarURL({ dynamic:true }));
+    message.channel.send({embeds: [embed]});
   }
 }

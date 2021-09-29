@@ -18,7 +18,6 @@ module.exports = {
     var text = fs.readFileSync(certPath, "utf-8");
     var footerArray = text.split("\n")
 
-
     const embed = new Discord.MessageEmbed()
       .setTitle("https://mine.ly/" + username + ".1")
       .setAuthor(
@@ -28,7 +27,7 @@ module.exports = {
       .setColor(config.colour)
       .setThumbnail("https://minotar.net/avatar/" + username + ".png")
       .setTimestamp()
-      .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)]);
+      .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], message.author.displayAvatarURL({ dynamic:true }));
     message.channel.send({embeds: [embed]});
   }
 };

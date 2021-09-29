@@ -12,13 +12,14 @@ module.exports = {
 
   let suggestion = args.slice(0).join(" ");
 
-  let embed = new Discord.RichEmbed()
-  .addField("Suggestion", suggestion)
+  let embed = new Discord.MessageEmbed()
+  .setAuthor("NEW SUGGESTION", bot.user.avatarURL({ dynamic:true }))
+  .addField("Suggestion:",suggestion)
   .setTimestamp()
-  .setColor(config.colour)
-  .setFooter(message.member.user.tag + " | " + message.guild.name, bot.user.avatarURL);
+  .setColor('GREEN')
+  .setFooter(message.member.user.tag + " | " + message.guild.name, message.member.user.avatarURL({ dynamic:true }));
   
-     bot.guilds.get(config.logsServer).channels.get("723404124955213854").send({ embed })
+  bot.guilds.cache.get(process.env.LOGSSERVER).channels.cache.get(process.env.LOGSCHANNEL).send({embeds: [embed]})
     
   message.channel.send("thats cool mate cheers");
   }

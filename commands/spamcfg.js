@@ -1,3 +1,8 @@
+const Discord = require('discord.js')
+const fs = require("fs");
+const path = require("path");
+const certPath = path.join(__dirname, '../assets/log.txt');
+
 module.exports = {
 	name: "spamcfg",
 	description: "Help command to show the commands",
@@ -6,27 +11,40 @@ module.exports = {
   args: true,
   execute: async (bot, message, args) => {
     //this is where the actual code for the command goes
-    
-    
-    const Discord = require('discord.js')
-    const fs = require("fs");
-    const path = require("path");
-    const certPath = path.join(__dirname, '../assets/log.txt');
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
+
+    message.delete();
 
     let filename = args[0]
     let text = args.slice(1).join(" ");
-
-    message.delete();
 
     if (!text.length) {
       message.channel.send("empty input, same joke")
       return;
     }
 
-    text = text.match(/.{1,100}(\s|$)/g);
+    await writeToFile(filename, text).then(success => {
+      let locate = path.join(__dirname, '../output/'+filename+'.cfg')
+      message.channel.send("Here is your cfg.")
+      message.channel.send({
+        files: [
+          locate
+        ]
+      });
+  
+      setTimeout(function(){ 
+        console.log("its time");
+        try {
+          fs.unlinkSync(locate);
+        } catch (err) {
+          console.error(err)
+        }
+      }, 3000);  
+    })
+  }
+};
+
+async function writeToFile(filename, text) {
+  text = text.match(/.{1,100}(\s|$)/g);
 
     var output = [];
 
@@ -56,22 +74,7 @@ module.exports = {
     });
 
     // close the stream
-    writeStream.end();
+    await writeStream.end()
 
-
-    let locate = path.join(__dirname, '../output/'+filename+'.cfg')
-    message.channel.send("Here is your cfg.", {
-      files: [
-        locate,
-      ]
-    });
-
-    sleep(100);
-
-    try {
-      fs.unlinkSync(locate);
-    } catch (err) {
-      console.error(err)
-    }
-  }
-};
+    return true;
+}
