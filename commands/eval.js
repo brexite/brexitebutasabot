@@ -2,7 +2,7 @@ module.exports = {
   name: "eval",
   description: "Run code in discord",
   aliases: ["run"],
-  usage: "<args>",
+  usage: "eval <args>",
   category: "Bot Owner",
   args: true,
   execute: async (bot, message, args) => {

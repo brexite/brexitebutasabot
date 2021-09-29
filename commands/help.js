@@ -5,8 +5,6 @@ module.exports = {
   usage: 'help (command name)',
   category: "Util",
   execute: async (bot, message, args) => {
-
-	console.log("fuck off")
     
   const Discord = require("discord.js");
   const fs = require("fs");

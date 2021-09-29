@@ -6,7 +6,6 @@ const path = require("path");
 
 module.exports = {
 	name: "addreply",
-	aliases: [""],
 	description: "Adds a reply to the replyArray",
 	usage: "addreply <text>",
 	category: "Admin",

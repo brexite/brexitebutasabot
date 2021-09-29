@@ -1,7 +1,7 @@
 module.exports = {
 	name: "skin",
 	description: "Finds your minecraft skin on mine.ly",
-	usage: "<username>",
+	usage: "skin <username>",
 	category: "Game",
   args: true,
   execute: async (bot, message, args) => {

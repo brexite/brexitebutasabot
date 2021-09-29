@@ -1,16 +1,19 @@
+const fs = require("fs");
+const path = require("path");
+const serverPath = path.join(__dirname, "../assets/serverdata.json");
+const serverdata = require("../assets/serverdata.json");
+require('dotenv').config();
+
 module.exports = {
   name: 'vcrole',
   aliases: ["vcchat"],
   description: 'Sets a role to be used in VC chat',
-  usage: '<set | del> <role | channel> OR vcrole <info>',
+  usage: `vcrole <set | del> <role | channel> OR ${process.env.PREFIX}vcrole <info>`,
   category: "Admin",
   args: true,
   execute: async (bot, message, args) => {
 
-    const fs = require("fs");
-    const path = require("path");
-    const serverPath = path.join(__dirname, "../assets/serverdata.json");
-    const serverdata = require("../assets/serverdata.json");
+    
 
     if (args[0]) {
       var vcRole = serverdata[message.guild.id].vcRole;
