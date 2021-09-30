@@ -65,6 +65,7 @@ bot.on('voiceStateUpdate', (oldState, newState) => {
 bot.on('messageCreate', message => {
 
   if (message.channel.type === "dm") {
+    console.log(hi);
     message.author.send(
       replyArray[Math.floor(Math.random() * replyArray.length)]
     );
