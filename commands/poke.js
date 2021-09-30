@@ -16,7 +16,7 @@ module.exports = {
     var numberArgs = parseInt(args[0]); // Counts in terms of the line in the txt (starting from 1)
 
     //debug to see if all outputs are working
-    if(process.env.BOTOWNERID === message.member.id)){
+    if(process.env.BOTOWNERID === message.member.id){
       if(Number.isInteger(numberArgs) == true && numberArgs < replyArray.length + 1 && numberArgs >= 1 ) {
         message.channel.send(replyArray[numberArgs - 1]);
         return;
