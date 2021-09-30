@@ -31,7 +31,6 @@ module.exports = {
       });
   
       setTimeout(function(){ 
-        console.log("its time");
         try {
           fs.unlinkSync(locate);
         } catch (err) {
