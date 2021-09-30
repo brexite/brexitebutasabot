@@ -1,3 +1,11 @@
+const Discord = require("discord.js");
+let config = require("../config.json"),
+  colour = config.colour;
+
+const path = require("path");
+const fs = require("fs");
+var footerArray = fs.readFileSync(path.join(__dirname, '../assets/footerArray.txt'), "utf-8").split("\n")
+
 module.exports = {
   name: "eval",
   description: "Run code in discord",
@@ -6,13 +14,6 @@ module.exports = {
   category: "Bot Owner",
   args: true,
   execute: async (bot, message, args) => {
-    const Discord = require("discord.js");
-    let config = require("../config.json"),
-      colour = config.colour;
-
-    const path = require("path");
-    const fs = require("fs");
-    var footerArray = fs.readFileSync(path.join(__dirname, '../assets/footerArray.txt'), "utf-8").split("\n")
 
     const clean = text => {
       if (typeof text === "string")
