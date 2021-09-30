@@ -17,7 +17,6 @@ const bot = new Discord.Client({
 const text = fs.readFileSync(path.join(__dirname, "./assets/replyArray.txt"), "utf-8");
 const replyArray = text.split("\n");
 const serverdata = require("./assets/serverdata.json");
-const { Channel } = require('diagnostics_channel');
 
 //ENV
 const prefix = process.env.PREFIX;
