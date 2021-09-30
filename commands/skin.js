@@ -1,3 +1,11 @@
+const Discord = require('discord.js')
+const fs = require("fs");
+const path = require("path");
+let config = require('../config.json'),
+    colour = config.colour;
+var text = fs.readFileSync(path.join(__dirname, '../assets/footerArray.txt'), "utf-8");
+var footerArray = text.split("\n")
+
 module.exports = {
 	name: "skin",
 	description: "Finds your minecraft skin on mine.ly",
@@ -5,18 +13,8 @@ module.exports = {
 	category: "Game",
   args: true,
   execute: async (bot, message, args) => {
-    
-    const Discord = require('discord.js')
-    const fs = require("fs");
-    const path = require("path");
-    const certPath = path.join(__dirname, '../assets/footerArray.txt');
-    let config = require('../config.json'),
-        colour = config.colour;
   
     let username = args.join(" ");
-
-    var text = fs.readFileSync(certPath, "utf-8");
-    var footerArray = text.split("\n")
 
     const embed = new Discord.MessageEmbed()
       .setTitle("https://mine.ly/" + username + ".1")

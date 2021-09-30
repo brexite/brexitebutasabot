@@ -1,3 +1,7 @@
+const Discord = require('discord.js');
+let config = require('../config.json'),
+    colour = config.colour;
+
 module.exports = {
 	name: "p",
 	description: "P",
@@ -5,11 +9,6 @@ module.exports = {
 	category: "Fun",
   execute: async (bot, message, args) => {
     //this is where the actual code for the command goes
-    const Discord = require('discord.js')
-    const path = require("path");
-    const certPath = path.join(__dirname, "../assets/footerArray.txt");
-    let config = require('../config.json'),
-        colour = config.colour;
     
     var i = 0;
     var random = [Math.ceil(Math.random() * 25)];

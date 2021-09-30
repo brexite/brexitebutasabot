@@ -13,8 +13,6 @@ module.exports = {
   args: true,
   execute: async (bot, message, args) => {
 
-    
-
     if (args[0]) {
       var vcRole = serverdata[message.guild.id].vcRole;
       var vcChannel = serverdata[message.guild.id].vcChannel;
@@ -111,7 +109,7 @@ module.exports = {
             message.channel.send("Please specify channel or role");
           }
           break;
-        case "list":
+        case "info":
 
           break;
       }

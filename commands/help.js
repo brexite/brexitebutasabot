@@ -1,20 +1,19 @@
+const Discord = require("discord.js");
+let config = require('../config.json'),
+	colour = config.colour;
+
+const fs = require("fs");
+const path = require("path");
+var text = fs.readFileSync(path.join(__dirname, '../assets/footerArray.txt'), "utf-8");
+var footerArray = text.split("\n")
+
 module.exports = {
   name: 'help',
   description: 'List all of my commands or info about a specific command.',
   aliases: ['commands'],
   usage: 'help (command name)',
   category: "Util",
-  execute: async (bot, message, args) => {
-    
-  const Discord = require("discord.js");
-  const fs = require("fs");
-  const path = require("path");
-  const certPath = path.join(__dirname, '../assets/footerArray.txt');
-  var text = fs.readFileSync(certPath, "utf-8");
-  var footerArray = text.split("\n")
-  let config = require('../config.json'),
-      colour = config.colour;
-    
+  execute: async (bot, message, args) => {   
 
 	const embed = new Discord.MessageEmbed()
 		.setColor("#4f1110")

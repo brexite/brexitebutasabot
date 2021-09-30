@@ -10,7 +10,6 @@ module.exports = {
 	category: "Game",
   args: true,
   execute: async (bot, message, args) => {
-    //this is where the actual code for the command goes
 
     message.delete();
 
@@ -32,7 +31,6 @@ module.exports = {
       });
   
       setTimeout(function(){ 
-        console.log("its time");
         try {
           fs.unlinkSync(locate);
         } catch (err) {

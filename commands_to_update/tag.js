@@ -17,8 +17,7 @@ module.exports = {
     if (args[0] == "add") {
       var image = args[1];
       fs.readFile(tagsPath, 'utf8', function readFileCallback(err, data){
-        if (err){
-            console.log("LOL!")
+        if (err){S
             console.log(err);
         } else {
           var obj = JSON.parse(data);
