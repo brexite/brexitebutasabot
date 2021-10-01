@@ -2,7 +2,7 @@ module.exports = {
 	name: "userinfo",
   aliases: ['info','user','whois'],
 	description: "Returns information about the user",
-	usage: "userinfo",
+	usage: "userinfo (user-mention)",
 	category: "Util",
   execute: async (bot, message, args) => {
     
