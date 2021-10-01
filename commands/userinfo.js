@@ -1,3 +1,6 @@
+const Discord = require('discord.js')
+let config = require('../config.json')
+    
 module.exports = {
 	name: "userinfo",
   aliases: ['info','user','whois'],
@@ -6,27 +9,17 @@ module.exports = {
 	category: "Util",
   execute: async (bot, message, args) => {
     
-    const Discord = require('discord.js')
-    let config = require('../config.json')
-    
     //emojis
     const willoff = "<:willoff:738540171254956064>";
-    
     let member = message.mentions.members.first() || message.member,
     user = member.user;
-    
-    var botCheck
-    if (user.bot == true) {
-      botCheck = "✅"
-    } else {
-      botCheck = "❌"
-    }
+    let botCheck = !!user.bot ? "✅" : "❌";
 
     var d = new Date(user.createdTimestamp)
-    d = d.toString().split(" GMT")[0]
+    d = d.toUTCString()
     
     var e = new Date(member.joinedTimestamp)    
-    e = e.toString().split(" GMT")[0]
+    e = e.toUTCString()
 
     const embed = new Discord.MessageEmbed()
       .setTitle(user.tag)
@@ -35,8 +28,8 @@ module.exports = {
       .setDescription([
         `${willoff}` + "**Nickname:** "+ member.displayName,
         `${willoff}` + "**ID:** `"+ member.id+"`",
-        `${willoff}` + "**Joined Guild:**  "+ e + " (UTC)",
-        `${willoff}` + "**Joined Discord:** " + d + " (UTC)",
+        `${willoff}` + `**Joined Guild:** ${e}`,
+        `${willoff}` + `**Joined Discord:** ${d}`,
         "‎",
         `${willoff}` + "**Bot:** " + botCheck,
         `${willoff}` + "**Roles:** " + member.roles.cache.map(r => `${r}`).join(' | ')
