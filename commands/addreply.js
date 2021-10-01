@@ -3,6 +3,7 @@ require('dotenv').config();
 let config = require("../config.json")
 const fs = require("fs");
 const path = require("path");
+const Discord = require('discord.js')
 
 module.exports = {
 	name: "addreply",
@@ -19,7 +20,6 @@ module.exports = {
     });
       
     message.channel.send("thats cool mate cheers");
-    const Discord = require('discord.js')
 
     var text = fs.readFileSync(path.join(__dirname, "../assets/replyArray.txt"), "utf-8");
     var replyArray = text.split("\n")

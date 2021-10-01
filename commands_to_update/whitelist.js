@@ -10,10 +10,7 @@ module.exports = {
     const Discord = require('discord.js')
     const fs = require("fs");
     const path = require("path");
-    const certPath = path.join(__dirname, "../assets/footerArray.txt");
 
-    var text = fs.readFileSync(certPath, "utf-8");
-    var footerArray = text.split("\n"); // txt output of footerArray.txt
       let config = require('../config.json'),
         colour = config.colour;
     const serverPath = path.join(__dirname, "../assets/serverdata.json");
@@ -124,7 +121,7 @@ module.exports = {
           try {embed.addField("✅ Whitelisted", open, true)}
           catch (err) {embed.addField("✅ Whitelisted", "<No Whitelisted Channels>", true)}
           embed.setTimestamp()
-          .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], "https://cdn.discordapp.com/app-icons/609326951592755211/db440b2935c9e563017568ec01ee43cd.png");
+          .setFooter(message.member.user.tag + " | " + message.guild.name, message.member.user.avatarURL({ dynamic:true }));
           message.channel.send({ embed });
         break;
         default: message.channel.send("you utter muppet, you absolute buffoon, enter a valid command")

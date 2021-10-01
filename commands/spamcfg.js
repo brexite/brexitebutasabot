@@ -1,7 +1,6 @@
 const Discord = require('discord.js')
 const fs = require("fs");
 const path = require("path");
-const certPath = path.join(__dirname, '../assets/log.txt');
 
 module.exports = {
 	name: "spamcfg",

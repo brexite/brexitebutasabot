@@ -4,8 +4,6 @@ let config = require('../config.json'),
 
 const fs = require("fs");
 const path = require("path");
-var text = fs.readFileSync(path.join(__dirname, '../assets/footerArray.txt'), "utf-8");
-var footerArray = text.split("\n")
 
 module.exports = {
   name: 'help',
@@ -18,7 +16,7 @@ module.exports = {
 	const embed = new Discord.MessageEmbed()
 		.setColor("#4f1110")
 		.setAuthor(`${bot.user.username} Help`, bot.user.displayAvatarURL({ dynamic:true }))
-		.setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], message.author.displayAvatarURL({ dynamic:true }))
+		.setFooter(message.member.user.tag + " | " + message.guild.name, message.member.user.avatarURL({ dynamic:true }))
 		.setTimestamp();
 	if (args[0]) {
 		let command = args[0];
