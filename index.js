@@ -53,11 +53,11 @@ bot.on("ready", async () => {
 bot.on('voiceStateUpdate', (oldState, newState) => {
   if(newState.channel) {
     let role = newState.guild.roles.cache.find(role => role.id == serverdata[newState.guild.id].vcRole);
-    newState.member.roles.add(role).catch(console.error);
+    newState.member.roles.add(role).catch("Unable to find role");
   }
   else if (oldState.channel){
     let role = oldState.guild.roles.cache.find(role => role.id == serverdata[oldState.guild.id].vcRole);
-    oldState.member.roles.remove(role).catch(console.error);
+    oldState.member.roles.remove(role).catch("Unable to find role");
   }
 })
 

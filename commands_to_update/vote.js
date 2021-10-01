@@ -1,3 +1,8 @@
+const Discord = require("discord.js");
+const fs = require("fs");
+const path = require("path");
+const ms = require("ms");
+
 module.exports = {
 	name: "vote",
 	aliases: ["poll"],
@@ -5,11 +10,6 @@ module.exports = {
 	usage: "help (duration) <Poll topic>",
 	category: "Util",
   execute: async (bot, message, args) => {
-    const Discord = require("discord.js");
-    const fs = require("fs");
-    const path = require("path");
-    const certPath = path.join(__dirname, "../assets/footerArray.txt");
-    const ms = require("ms");
 
     var agree = ["✅", "✔️", "💚", "😍", "😳"];
     var disagree = ["🚫", "❌", "🗑", "😡", "🤮"];
@@ -18,8 +18,6 @@ module.exports = {
     var timer = 20000;
     let config = require("../config.json"),
       colour = config.colour;
-      var text = fs.readFileSync(certPath, "utf-8");
-      var footerArray = text.split("\n");
 
     function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
@@ -94,7 +92,6 @@ module.exports = {
       .addField("NO", votesNo + ` Votes`, true)
       .setTimestamp()
       .setThumbnail("https://cdn.discordapp.com/attachments/354594007873224704/527816017288626176/JPEG_20181221_213802.jpg")
-      .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], message.author.displayAvatarURL({ dynamic:true }));
-    message.channel.send({embeds: [embed]});
+      .setFooter(message.member.user.tag + " | " + message.guild.name, message.member.user.avatarURL({ dynamic:true }));
   }
 }

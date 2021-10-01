@@ -4,7 +4,6 @@ let config = require("../config.json"),
 
 const path = require("path");
 const fs = require("fs");
-var footerArray = fs.readFileSync(path.join(__dirname, '../assets/footerArray.txt'), "utf-8").split("\n")
 
 module.exports = {
   name: "eval",
@@ -36,8 +35,7 @@ module.exports = {
           .addField("Output", `\`\`\`${clean(evaled)}\`\`\``)
           .setColor(colour)
           .setTimestamp()
-          .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], message.author.displayAvatarURL({ dynamic:true }));
-
+          .setFooter(message.member.user.tag + " | " + message.guild.name, message.member.user.avatarURL({ dynamic:true }));
         message.channel.send({embeds: [embed]});
       } catch (err) {
         let embed = new Discord.MessageEmbed()
@@ -45,7 +43,7 @@ module.exports = {
           .addField("Error", `\`\`\`xl\n${clean(err)}\n\`\`\``)
           .setColor(colour)
           .setTimestamp()
-          .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], message.author.displayAvatarURL({ dynamic:true }));
+          .setFooter(message.member.user.tag + " | " + message.guild.name, message.member.user.avatarURL({ dynamic:true }));
 
         message.channel.send({embeds: [embed]});
       }

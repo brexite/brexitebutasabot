@@ -7,14 +7,11 @@ module.exports = {
     const Discord = require('discord.js')
     const fs = require("fs");
     const path = require("path");
-    const certPath = path.join(__dirname, "../assets/footerArray.txt");
     const lordPath = path.join(__dirname, '../assets/humanevolution.txt');
     let config = require('../config.json'),
         colour = config.colour;
 
-    var text = fs.readFileSync(certPath, "utf-8");
     var lord = fs.readFileSync(lordPath, "utf-8");
-    var footerArray = text.split("\n");
     var lordArray = lord.split("\n");
     var guild = message.guild;
 
@@ -41,7 +38,8 @@ module.exports = {
           `${user}`)
         .setTimestamp()
         .setThumbnail(`${user.avatarURL}`)
-        .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], "https://cdn.discordapp.com/app-icons/609326951592755211/db440b2935c9e563017568ec01ee43cd.png");
+        .setFooter(message.member.user.tag + " | " + message.guild.name, message.member.user.avatarURL({ dynamic:true }));
+        
         message.channel.send({ embed });
     } else {
       return;

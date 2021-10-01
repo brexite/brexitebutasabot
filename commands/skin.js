@@ -3,8 +3,6 @@ const fs = require("fs");
 const path = require("path");
 let config = require('../config.json'),
     colour = config.colour;
-var text = fs.readFileSync(path.join(__dirname, '../assets/footerArray.txt'), "utf-8");
-var footerArray = text.split("\n")
 
 module.exports = {
 	name: "skin",
@@ -25,7 +23,7 @@ module.exports = {
       .setColor(config.colour)
       .setThumbnail("https://minotar.net/avatar/" + username + ".png")
       .setTimestamp()
-      .setFooter(footerArray[Math.floor(Math.random()*footerArray.length)], message.author.displayAvatarURL({ dynamic:true }));
+      .setFooter(message.member.user.tag + " | " + message.guild.name, message.member.user.avatarURL({ dynamic:true }));
     message.channel.send({embeds: [embed]});
   }
 };
