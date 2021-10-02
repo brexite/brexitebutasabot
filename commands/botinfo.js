@@ -1,9 +1,5 @@
-const fs = require("fs");
-const path = require("path");
-const serverPath = path.join(__dirname, "../assets/serverdata.json");
 const packageJSON = require("../package.json");
 const Discord = require('discord.js');
-const { deflateSync } = require("zlib");
 require('dotenv').config();
 
 module.exports = {

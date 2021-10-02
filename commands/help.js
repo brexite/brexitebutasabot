@@ -1,9 +1,5 @@
 const Discord = require("discord.js");
-let config = require('../config.json'),
-	colour = config.colour;
-
 const fs = require("fs");
-const path = require("path");
 
 module.exports = {
   name: 'help',

@@ -2,9 +2,6 @@ const Discord = require("discord.js");
 let config = require("../config.json"),
   colour = config.colour;
 
-const path = require("path");
-const fs = require("fs");
-
 module.exports = {
   name: "eval",
   description: "Run code in discord",
