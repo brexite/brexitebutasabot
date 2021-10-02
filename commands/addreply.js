@@ -1,4 +1,3 @@
-const { Permissions } = require('discord.js');
 require('dotenv').config();
 let config = require("../config.json")
 const fs = require("fs");
