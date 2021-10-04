@@ -1,10 +1,6 @@
-const Discord = require('discord.js')
-const fs = require("fs");
-const path = require("path");
+const replyJSON = require("../assets/replyArray.json");
+const replyArray = replyJSON["replies"];
 require('dotenv').config();
-
-var text = fs.readFileSync(path.join(__dirname, '../assets/replyArray.txt'), "utf-8");
-var replyArray = text.split("\n")
 
 module.exports = {
 	name: "poke",

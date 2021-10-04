@@ -2,8 +2,11 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const { Permissions } = require('discord.js');
 const express = require("express");
-const http = require("http");
-const path = require("path");
+
+const replyJSON = require("./assets/replyArray.json");
+const replyArray = replyJSON["replies"];
+
+const serverData = require("./assets/serverdata.json");
 
 require('dotenv').config();
 
@@ -13,10 +16,6 @@ const bot = new Discord.Client({
   intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES", "DIRECT_MESSAGES"], 
   disableMentions: 'everyone' 
 });
-
-const text = fs.readFileSync(path.join(__dirname, "./assets/replyArray.txt"), "utf-8");
-const replyArray = text.split("\n");
-const serverdata = require("./assets/serverdata.json");
 
 //ENV
 const prefix = process.env.PREFIX;
@@ -51,33 +50,35 @@ bot.on("ready", async () => {
 
 //VC Chat Role
 bot.on('voiceStateUpdate', (oldState, newState) => {
-  if(newState.channel && serverdata[newState.guild.id].vcRole.length > 0) {
-    let role = newState.guild.roles.cache.find(role => role.id == serverdata[newState.guild.id].vcRole);
+  if(newState.channel && serverData[newState.guild.id].vcRole.length > 0) {
+    let role = newState.guild.roles.cache.find(role => role.id == serverData[newState.guild.id].vcRole);
     newState.member.roles.add(role).catch("Unable to find role");
   }
-  else if (oldState.channel && serverdata[oldState.guild.id].vcRole.length > 0){
-    let role = oldState.guild.roles.cache.find(role => role.id == serverdata[oldState.guild.id].vcRole);
+  else if (oldState.channel && serverData[oldState.guild.id].vcRole.length > 0){
+    let role = oldState.guild.roles.cache.find(role => role.id == serverData[oldState.guild.id].vcRole);
     oldState.member.roles.remove(role).catch("Unable to find role");
   }
 })
 
 bot.on('messageCreate', message => {
 
+  if (message.author.bot) return;
+
   if (message.channel.type === "DM") {
-    message.author.send(
-      replyArray[Math.floor(Math.random() * replyArray.length)]
-    );
+    try {
+      message.author.send(replyArray[Math.floor(Math.random() * replyArray.length)])
+    } catch {
+      console.error;
+    };
     return;
   }
 
-  if (!serverdata[message.guild.id]) {
-    serverdata[message.guild.id] = {
+  if (!serverData[message.guild.id]) {
+    serverData[message.guild.id] = {
       vcChannel:[],
       vcRole:[]
     };
   } 
-
-  if (message.author.bot) return;
 
   const args = message.content.slice(prefix.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
