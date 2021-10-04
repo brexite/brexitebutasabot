@@ -8,7 +8,7 @@ module.exports = {
 	name: "addreply",
 	description: "Adds a reply to the replyArray",
 	usage: "addreply <text>",
-	category: "Admin",
+	category: "Bot Owner",
   args: true,
   execute: async (bot, message, args) => {
 

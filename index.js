@@ -95,9 +95,10 @@ bot.on('messageCreate', message => {
   //) {
 
     if(command.category === "Admin" && !message.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
-      return message.channel.send("You don't have permissions to use this command - Users with Kick Perms Only")
+      return message.channel.send("You don't have permissions to use this command - Moderators + Admins Only")
       .then(msg => {
         setTimeout(() => msg.delete(), 10000)
+        setTimeout(() => message.delete(), 10000)
       })
       .catch(console.error);
     }
@@ -106,6 +107,7 @@ bot.on('messageCreate', message => {
       return message.channel.send("You don't have permissions to use this command - Bot Owners Only")
       .then(msg => {
         setTimeout(() => msg.delete(), 10000)
+        setTimeout(() => message.delete(), 10000)
       })
       .catch(console.error);
     }
