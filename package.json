@@ -1,7 +1,7 @@
 {
   "name": "brexite_but_as_a_bot",
-  "version": "4.1.1",
-  "description": "New commands - info, userinfo",
+  "version": "4.1.2",
+  "description": "Converting replyArray to a .json file",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
