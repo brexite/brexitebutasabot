@@ -13,15 +13,17 @@ module.exports = {
 
     var agree = ["✅", "✔️", "💚", "😍", "😳"];
     var disagree = ["🚫", "❌", "🗑", "😡", "🤮"];
-    var currentAgree;
-    var currentDisagree;
-    var timer = 20000;
+    const shitNumber = Math.floor(Math.random() * agree.length);
+    const currentAgree = agree[shitNumber];
+    const currentDisagree = disagree[shitNumber];
+
+    var timer = 20000
     let config = require("../config.json"),
       colour = config.colour;
-
     function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
+
 
     if (!args) return message.reply("You must have something to vote for!");
     if (!message.content.includes("?"))
@@ -31,9 +33,7 @@ module.exports = {
     await message.delete();
 
     var theQuestion;
-
     let voteEmbed = new Discord.MessageEmbed();
-
     if (ms(args[0])) {
       theQuestion = args.slice(1).join(" ");
       timer = ms(args[0]);
@@ -52,46 +52,53 @@ module.exports = {
       );
 
     const voteTopic = await message.channel.send({embeds: [voteEmbed]});
-    var shitNumber = Math.floor(Math.random() * agree.length);
-    currentAgree = agree[shitNumber];
-    currentDisagree = disagree[shitNumber];
-
     await voteTopic.react(currentAgree);
     await voteTopic.react(currentDisagree);
 
+    const reactFilter = (reaction) => {
+      console.log(`Collected ${reaction.emoji.name}`);
+      return reaction.emoji.name == currentAgree ||
+      reaction.emoji.name == currentDisagree
+    }
+
     // Create a reaction collector
-    const results = await voteTopic.awaitReactions(
-      reaction =>
-        reaction.emoji.name === currentAgree ||
-        reaction.emoji.name === currentDisagree,
-      { time: timer }
-    );
+    voteTopic.awaitReactions({
+      reactFilter,
+      time: timer, 
+      errors: ['time'] }
+    ).then(collected =>{
+      console.log(collected.size)
+    }).catch(collected => {
 
-    var votesYes = results.get(currentAgree);
-    var votesNo = results.get(currentDisagree);
+      var votesYes = collected.get(currentAgree);
+      var votesNo = collected.get(currentDisagree);
 
-    if (votesYes == undefined) {
-      votesYes = 0;
-    } else {
-      votesYes = results.get(currentAgree).count - 1;
-    }
+      if (votesYes == undefined) {
+        votesYes = 0;
+      } else {
+        votesYes = collected.get(currentAgree).count - 1;
+      }
 
-    if (votesNo == undefined) {
-      votesNo = 0;
-    } else {
-      votesNo = results.get(currentDisagree).count - 1;
-    }
+      if (votesNo == undefined) {
+        votesNo = 0;
+      } else {
+        votesNo = collected.get(currentDisagree).count - 1;
+      }
 
-    voteTopic.delete();
+      voteTopic.delete();
 
-    const embed = new Discord.MessageEmbed()
-      .setTitle(theQuestion)
-      .setAuthor("brexite but as a bot")
-      .setColor(config.colour)
-      .addField("YES", votesYes + ` Votes`, true)
-      .addField("NO", votesNo + ` Votes`, true)
-      .setTimestamp()
-      .setThumbnail("https://cdn.discordapp.com/attachments/354594007873224704/527816017288626176/JPEG_20181221_213802.jpg")
-      .setFooter(message.member.user.tag + " | " + message.guild.name, message.member.user.avatarURL({ dynamic:true }));
+      const collectedEmbed = new Discord.MessageEmbed()
+        .setTitle(theQuestion)
+        .setAuthor("brexite but as a bot")
+        .setColor(config.colour)
+        .addField("YES", votesYes + ` Votes`, true)
+        .addField("NO", votesNo + ` Votes`, true)
+        .setTimestamp()
+        .setThumbnail("https://cdn.discordapp.com/attachments/354594007873224704/527816017288626176/JPEG_20181221_213802.jpg")
+        .setFooter(message.member.user.tag + " | " + message.guild.name, message.member.user.avatarURL({ dynamic:true }));
+
+
+      message.channel.send({embeds: [collectedEmbed]});
+    })
   }
 }

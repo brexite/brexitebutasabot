@@ -24,6 +24,7 @@ const botonChannel = process.env.BOTONCHANNEL;
 const logsServer = process.env.LOGSSERVER;
 const botOwnerId = process.env.BOTOWNERID
 
+//CMD LOADING
 bot.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -34,6 +35,7 @@ for (const file of commandFiles) {
   bot.commands.set(command.name, command);
 }
 
+// INIT
 bot.on("ready", async () => {
   console.log(bot.user.username + " is online.");
   bot.guilds.cache.get(logsServer).channels.cache.get(botonChannel)
@@ -42,7 +44,7 @@ bot.on("ready", async () => {
   bot.user.setPresence({
     status: "online",
     activities: [{
-      name: "BUY APPLE SHARES",
+      name: "LIQUIDATE COMPANY SIM",
       type: "PLAYING"
     }]
   });
@@ -60,6 +62,7 @@ bot.on('voiceStateUpdate', (oldState, newState) => {
   }
 })
 
+//MSG Catch
 bot.on('messageCreate', message => {
 
   if (message.author.bot) return;
@@ -137,6 +140,7 @@ bot.on('messageCreate', message => {
 //}
 );
 
+//IM DOING STUFF
 function funnyMessage(commandMessage) {
   if (commandMessage.content == "bruh") commandMessage.react('891716288576122910');
 
