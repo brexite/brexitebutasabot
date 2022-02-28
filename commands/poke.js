@@ -5,7 +5,7 @@ require('dotenv').config();
 module.exports = {
 	name: "poke",
 	description: "See what happens idiot",
-	usage: "poke <question>",
+	usage: "poke",
 	category: "Fun",
   execute: async (bot, message, args) => {
 
