@@ -15,11 +15,11 @@ module.exports = {
     user = member.user;
     let botCheck = !!user.bot ? "✅" : "❌";
 
-    var d = new Date(user.createdTimestamp)
-    d = d.toUTCString()
+    var userCreated = new Date(user.createdTimestamp)
+    userCreated = userCreated.toUTCString()
     
-    var e = new Date(member.joinedTimestamp)    
-    e = e.toUTCString()
+    var userJoinedGuild = new Date(member.joinedTimestamp)    
+    userJoinedGuild = userJoinedGuild.toUTCString()
 
     const embed = new Discord.MessageEmbed()
       .setTitle(user.tag)
@@ -28,8 +28,8 @@ module.exports = {
       .setDescription([
         `${willoff}` + "**Nickname:** "+ member.displayName,
         `${willoff}` + "**ID:** `"+ member.id+"`",
-        `${willoff}` + `**Joined Guild:** ${e}`,
-        `${willoff}` + `**Joined Discord:** ${d}`,
+        `${willoff}` + `**Joined Guild:** ${userJoinedGuild}`,
+        `${willoff}` + `**Joined Discord:** ${userCreated}`,
         "‎",
         `${willoff}` + "**Bot:** " + botCheck,
         `${willoff}` + "**Roles:** " + member.roles.cache.map(r => `${r}`).join(' | ')

@@ -1,14 +1,13 @@
 const replyJSON = require("../assets/replyArray.json");
 const replyArray = replyJSON["replies"];
 require('dotenv').config();
-
 module.exports = {
 	name: "poke",
 	description: "See what happens idiot",
 	usage: "poke",
 	category: "Fun",
   execute: async (bot, message, args) => {
-        
+
     var numberArgs = parseInt(args[0]); // Counts in terms of the line in the txt (starting from 1)
 
     //debug to see if all outputs are working
@@ -18,7 +17,8 @@ module.exports = {
         return;
       }
     }
+	
+    message.channel.send(replyArray[Math.floor(Math.random()*replyArray.length)]);
 
-      message.channel.send(replyArray[Math.floor(Math.random()*replyArray.length)]);
   }
 };
