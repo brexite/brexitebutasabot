@@ -99,7 +99,7 @@ bot.on('messageCreate', message => {
   //) {
 
     if(command.category === "Admin" && !message.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
-      return message.channel.send("You don't have permissions to use this command - Moderators + Admins Only")
+      return message.reply("You don't have permissions to use this command - Moderators + Admins Only")
       .then(msg => {
         setTimeout(() => msg.delete(), 10000)
         setTimeout(() => message.delete(), 10000)
@@ -108,7 +108,7 @@ bot.on('messageCreate', message => {
     }
 
     if(command.category === "Bot Owner" && message.member.id != botOwnerId) {
-      return message.channel.send("You don't have permissions to use this command - Bot Owners Only")
+      return message.reply("You don't have permissions to use this command - Bot Owners Only")
       .then(msg => {
         setTimeout(() => msg.delete(), 10000)
         setTimeout(() => message.delete(), 10000)
@@ -123,7 +123,7 @@ bot.on('messageCreate', message => {
         reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
       }
 
-      return message.channel.send(reply)
+      return message.reply(reply)
       .then(msg => {
         setTimeout(() => msg.delete(), 10000)
       })

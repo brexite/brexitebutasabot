@@ -4,6 +4,6 @@ module.exports = {
     usage: 'ping',
     category: "Util",
     execute: async (bot, message, args) => {
-        message.reply(`🏓 Latency is ${Date.now() - message.createdTimestamp}ms. API Latency is ${Math.round(bot.ws.ping)}ms`);
+        message.reply(`https://discord.com/api/oauth2/authorize?client_id=609326951592755211&permissions=1642787761399&scope=bot`);
     }
 }

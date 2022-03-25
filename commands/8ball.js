@@ -47,6 +47,6 @@ module.exports = {
 			break;
 	}
 
-    message.channel.send({ embeds: [ballEmbed] });
+    message.reply({ embeds: [ballEmbed] });
   }
 };

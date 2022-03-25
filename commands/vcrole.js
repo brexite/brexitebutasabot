@@ -27,13 +27,13 @@ module.exports = {
             try {
               var thisRole = args[2];
             } catch {
-              message.channel.send("Error: No role specified");
+              message.reply("Error: No role specified");
             }
             if (!thisRole) {
               break;
             }
             if (vcRole.includes(thisRole)) {
-              message.channel.send("Error: Role already added");
+              message.reply("Error: Role already added");
             } else {
               vcRole.push(thisRole);
               fs.writeFile(
@@ -43,20 +43,20 @@ module.exports = {
                   console.error(err);
                 }
               );
-              message.channel.send("Success!");
+              message.reply("Success!");
             }
           }
           else if (args[1] == "channel") {
             try {
               var thisChannel = args[2];
             } catch {
-              message.channel.send("Error: No channel specified");
+              message.reply("Error: No channel specified");
             }
             if (!thisChannel) {
               break;
             }
             if (vcChannel) {
-              message.channel.send("Error: Channel already added");
+              message.reply("Error: Channel already added");
             } else {
               vcChannel.push(thisChannel);
               fs.writeFile(
@@ -66,10 +66,10 @@ module.exports = {
                   console.error(err);
                 }
               );
-              message.channel.send("Success!");
+              message.reply("Success!");
             }
           } else {
-            message.channel.send("Please specify channel or role");
+            message.reply("Please specify channel or role");
           }
           break;
 
@@ -86,9 +86,9 @@ module.exports = {
                   console.error(err);
                 }
               );
-              message.channel.send("Success!");
+              message.reply("Success!");
             } else {
-              message.channel.send("Error: No role exists");
+              message.reply("Error: No role exists");
             }
           }
           else if (args[1] == "channel") {
@@ -101,12 +101,12 @@ module.exports = {
                   console.error(err);
                 }
               );
-              message.channel.send("Success!");
+              message.reply("Success!");
             } else {
-              message.channel.send("Error: No channel exists");
+              message.reply("Error: No channel exists");
             }
           } else {
-            message.channel.send("Please specify channel or role");
+            message.reply("Please specify channel or role");
           }
           break;
         case "info":

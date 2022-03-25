@@ -56,15 +56,15 @@ module.exports = {
             fs.writeFile(serverPath, JSON.stringify(serverdata, null, "\t"), (err) => {
               if (err) console.error(err)
             })
-            message.channel.send("All channels added to whitelist!")
+            message.reply("All channels added to whitelist!")
           } else if (whitelist.includes(channelid)){
-            message.channel.send("Error: Channel is already whitelist")
+            message.reply("Error: Channel is already whitelist")
           } else {
             whitelist.push(channelid);
             fs.writeFile(serverPath, JSON.stringify(serverdata, null, "\t"), (err) => {
               if (err) console.error(err)
             });
-            message.channel.send("<#"+ channelid + "> added to whitelist!")
+            message.reply("<#"+ channelid + "> added to whitelist!")
           }
           break;
         case 'delete':
@@ -77,15 +77,15 @@ module.exports = {
             fs.writeFile(serverPath, JSON.stringify(serverdata, null, "\t"), (err) => {
               if (err) console.error(err)
             })
-            message.channel.send("All channels removed from whitelist!")
+            message.reply("All channels removed from whitelist!")
           } else if (index > -1) {
             whitelist.splice(index, 1);
             fs.writeFile(serverPath, JSON.stringify(serverdata, null, "\t"), (err) => {
               if (err) console.error(err)
             });
-            message.channel.send("<#"+ channelid + "> removed from whitelist!")
+            message.reply("<#"+ channelid + "> removed from whitelist!")
           } else {
-            message.channel.send("Error: Channel is not whitelisted")
+            message.reply("Error: Channel is not whitelisted")
           }
 
           break;
@@ -122,9 +122,9 @@ module.exports = {
           catch (err) {embed.addField("✅ Whitelisted", "<No Whitelisted Channels>", true)}
           embed.setTimestamp()
           .setFooter(message.member.user.tag + " | " + message.guild.name, message.member.user.avatarURL({ dynamic:true }));
-          message.channel.send({ embed });
+          message.reply({ embed });
         break;
-        default: message.channel.send("you utter muppet, you absolute buffoon, enter a valid command")
+        default: message.reply("you utter muppet, you absolute buffoon, enter a valid command")
       }
     }
   }
