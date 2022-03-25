@@ -1,9 +1,10 @@
 module.exports = {
-    name: 'ping',
-    description: 'Pings the bot',
-    usage: 'ping',
+    name: 'botinvite',
+    description: 'Gives the invite to the bot',
+    usage: 'botinvite',
     category: "Util",
     execute: async (bot, message, args) => {
-        message.reply(`https://discord.com/api/oauth2/authorize?client_id=609326951592755211&permissions=1642787761399&scope=bot`);
+        message.reply(`check dms x`);
+        message.author.send(`Add the bot to your server here! >> https://discord.com/api/oauth2/authorize?client_id=609326951592755211&permissions=1642787761399&scope=bot <<`);
     }
 }
