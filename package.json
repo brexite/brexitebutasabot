@@ -1,7 +1,7 @@
 {
   "name": "brexite_but_as_a_bot",
-  "version": "4.1.4",
-  "description": "Changing responses to .reply(), added botinvite with correct permissions",
+  "version": "4.1.5",
+  "description": "Resetting issues with package.json",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
