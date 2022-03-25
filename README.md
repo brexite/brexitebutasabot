@@ -11,7 +11,7 @@
 ![Twitter Follow](https://img.shields.io/twitter/follow/brexite?color=%23000000&logoColor=%23111111&style=social)
 > This bot is used by more than 0 Discord users and more than 3 servers!
 
-Brexite as a bot is terrible. Do not use it [(unless... :flushed:)](https://discord.com/api/oauth2/authorize?client_id=609326951592755211&permissions=8&scope=bot).
+Brexite as a bot is terrible. Do not use it [(unless... :flushed:)](https://discord.com/api/oauth2/authorize?client_id=609326951592755211&permissions=1642787761399&scope=bot).
 Slap the like button ⭐ and don't forget to follow me on GitHub!
 
 ## Features
