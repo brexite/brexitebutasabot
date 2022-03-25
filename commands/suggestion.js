@@ -22,6 +22,6 @@ module.exports = {
     
     bot.guilds.cache.get(process.env.LOGSSERVER).channels.cache.get(process.env.LOGSCHANNEL).send({embeds: [embed]})
       
-    message.channel.send("thats cool mate cheers");
+    message.reply("thats cool mate cheers");
   }
 };

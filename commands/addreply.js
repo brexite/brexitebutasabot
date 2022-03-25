@@ -18,7 +18,7 @@ module.exports = {
     let reply = args.slice(0).join(" ").trim();
     var match = /\r|\n/.exec(reply);
     
-    if (match) return message.channel.send("Text contained newlines within, piss off kindly")
+    if (match) return message.reply("Text contained newlines within, piss off kindly")
 
     replyJSON['replies'].push(reply);
       fs.writeFile(replyPath, JSON.stringify(replyJSON, null, "\t"), (err) => {
@@ -35,7 +35,7 @@ module.exports = {
 
     bot.guilds.cache.get(process.env.LOGSSERVER).channels.cache.get(process.env.LOGSCHANNEL).send({embeds: [embed]})
 
-    message.channel.send("thats cool mate cheers");
+    message.reply("thats cool mate cheers");
 
   }
 }

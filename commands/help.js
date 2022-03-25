@@ -22,7 +22,7 @@ module.exports = {
 		else if (bot.aliases.has(command)) {
 			command = bot.commands.get(bot.aliases.get(command));
 		}
-		if(!command) return message.channel.send(embed.setTitle("Invalid Command.").setDescription(`Do \`${process.env.PREFIX}help\` for the list of the commands.`));
+		if(!command) return message.reply(embed.setTitle("Invalid Command.").setDescription(`Do \`${process.env.PREFIX}help\` for the list of the commands.`));
 		embed.setTitle(`${command.name.slice(0, 1).toUpperCase() + command.name.slice(1)} command help`);
 		embed.setDescription([
 			`❯ **Command:** ${command.name.slice(0, 1).toUpperCase() + command.name.slice(1)}`,
@@ -32,7 +32,7 @@ module.exports = {
 			`❯ **Category:** ${command.category ? command.category : "General" || "Misc"}`,
 		].join("\n"));
 
-		return message.channel.send({embeds: [embed]});
+		return message.reply({embeds: [embed]});
 	}
 	const categories = fs.readdirSync("./commands/");
   
@@ -69,6 +69,6 @@ module.exports = {
     embed.addField(output[i][0].toString(),output[i][1].toString())
     i++;
   })
-	return message.channel.send({embeds: [embed]});
+	return message.reply({embeds: [embed]});
   }
 }

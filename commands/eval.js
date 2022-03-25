@@ -33,7 +33,7 @@ module.exports = {
           .setColor(colour)
           .setTimestamp()
           .setFooter(message.member.user.tag + " | " + message.guild.name, message.member.user.avatarURL({ dynamic:true }));
-        message.channel.send({embeds: [embed]});
+        message.reply({embeds: [embed]});
       } catch (err) {
         let embed = new Discord.MessageEmbed()
           .addField("Input", `\`\`\`${args.join(" ")}\`\`\``)
@@ -42,7 +42,7 @@ module.exports = {
           .setTimestamp()
           .setFooter(message.member.user.tag + " | " + message.guild.name, message.member.user.avatarURL({ dynamic:true }));
 
-        message.channel.send({embeds: [embed]});
+        message.reply({embeds: [embed]});
       }
     }
   }

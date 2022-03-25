@@ -22,7 +22,7 @@ module.exports = {
 
     await writeToFile(filename, text).then(success => {
       let locate = path.join(__dirname, '../output/'+filename+'.cfg')
-      message.channel.send("Here is your cfg.")
+      message.reply("Here is your cfg.")
       message.channel.send({
         files: [
           locate

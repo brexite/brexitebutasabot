@@ -37,6 +37,6 @@ module.exports = {
     
       embed.setTimestamp()
       .setFooter(message.member.user.tag + " | " + message.guild.name, message.member.user.avatarURL({ dynamic:true }));
-    message.channel.send({embeds: [embed]});
+    message.reply({embeds: [embed]});
   }
 };
