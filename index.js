@@ -14,7 +14,7 @@ const app = express();
 const bot = new Discord.Client({  
   partials: ["CHANNEL"], 
   intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES", "DIRECT_MESSAGES"], 
-  disableMentions: 'everyone' 
+  allowedMentions: { parse: ['users', 'roles'], repliedUser: true }
 });
 
 //ENV
