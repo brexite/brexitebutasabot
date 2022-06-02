@@ -1,4 +1,5 @@
-const fs = require('fs');
+const fs = require("fs");
+const path = require("path");
 const Discord = require('discord.js');
 const { Permissions } = require('discord.js');
 const express = require("express");
@@ -6,6 +7,7 @@ const express = require("express");
 const replyJSON = require("./assets/replyArray.json");
 const replyArray = replyJSON["replies"];
 
+const serverPath = path.join(__dirname, "./assets/serverdata.json");
 const serverData = require("./assets/serverdata.json");
 
 require('dotenv').config();
@@ -61,6 +63,28 @@ bot.on('voiceStateUpdate', (oldState, newState) => {
     oldState.member.roles.remove(role).catch("Unable to find role");
   }
 })
+
+//Member Count
+setInterval(function () {
+
+  for(var key in serverData) {
+      var serverId = key
+      var channelName = serverData[key].memberCountChannelName
+      var channelId = serverData[key].memberCountChannelId
+
+      if (channelId){
+
+        var guild = bot.guilds.cache.get(serverId)
+        var memberCount = guild.memberCount;
+        var memberCountChannel = bot.channels.cache.get(channelId);
+
+        channelName = channelName.replace("${c}", memberCount);
+        memberCountChannel.setName(channelName)
+
+        console.log("Updating " + serverId + " to " + memberCount + " members");
+      }
+  }
+ }, 1000 * 60 * 31);  //Every 31 mins
 
 //MSG Catch
 bot.on('messageCreate', message => {
@@ -142,7 +166,23 @@ bot.on('messageCreate', message => {
 
 //IM DOING STUFF
 function funnyMessage(commandMessage) {
+  
+  if (serverData[commandMessage.guild.id].imDoingFeature == null) {
+    serverData[commandMessage.guild.id].imDoingFeature = false;
+    fs.writeFile(
+      serverPath,
+      JSON.stringify(serverData, null, "\t"),
+      err => {
+        console.log(serverData);
+        console.error(err);
+      }
+    );
+    return;
+  }
+
   if (commandMessage.content == "bruh") commandMessage.react('891716288576122910');
+
+  if (!serverData[commandMessage.guild.id].imDoingFeature) return;
 
   if ((commandMessage.content.startsWith("im doing") || commandMessage.content.startsWith("i'm doing"))) {
     var urmom = commandMessage.content;
