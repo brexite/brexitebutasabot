@@ -149,7 +149,7 @@ function funnyMessage(commandMessage) {
     urmom = urmom.replace("doing ", "");;
     if (urmom.length <= 1 || commandMessage.content.toLowerCase().includes('HTTP'.toLowerCase())) return;
 
-    commandMessage.channel.send(urmom);
+    commandMessage.channel.send({content: urmom,allowedMentions: { parse: ['users'], repliedUser: false } });
   }
 };
 

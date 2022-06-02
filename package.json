@@ -1,7 +1,7 @@
 {
   "name": "brexite_but_as_a_bot",
-  "version": "4.1.6",
-  "description": "Fucking bullshit with djs13 @everyone syntax changes",
+  "version": "4.1.7",
+  "description": "Adjustments to @everyone and @role behaviours",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
