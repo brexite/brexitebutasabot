@@ -1,7 +1,7 @@
 {
   "name": "brexite_but_as_a_bot",
-  "version": "4.1.8",
-  "description": "Server specific member counts and imdoing toggle capability",
+  "version": "4.2.0",
+  "description": "Cleaned up new commands and updated to djs13.8.0",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -12,7 +12,7 @@
   "dependencies": {
     "better-sqlite3": "^7.1.0",
     "canvas": "^2.6.1",
-    "discord.js": "^13.1.0",
+    "discord.js": "^13.8.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "fs": "^0.0.2",

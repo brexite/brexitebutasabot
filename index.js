@@ -24,7 +24,7 @@ const prefix = process.env.PREFIX;
 const token = process.env.TOKEN;
 const botonChannel = process.env.BOTONCHANNEL;
 const logsServer = process.env.LOGSSERVER;
-const botOwnerId = process.env.BOTOWNERID
+const botOwnerId = process.env.BOTOWNERID;
 
 //CMD LOADING
 bot.commands = new Discord.Collection();
@@ -46,7 +46,7 @@ bot.on("ready", async () => {
   bot.user.setPresence({
     status: "online",
     activities: [{
-      name: "LIQUIDATE COMPANY SIM",
+      name: "BLADEE SIMULATOR 2025",
       type: "PLAYING"
     }]
   });
@@ -84,7 +84,7 @@ setInterval(function () {
         console.log("Updating " + serverId + " to " + memberCount + " members");
       }
   }
- }, 1000 * 60 * 31);  //Every 31 mins
+ }, 1001 * 60 * 30);  //approx 30 mins
 
 //MSG Catch
 bot.on('messageCreate', message => {
@@ -116,11 +116,6 @@ bot.on('messageCreate', message => {
   funnyMessage(message);
 
   if (!command || !message.content.startsWith(prefix)) return;
-
-  //if (
-    //message.member.permission.has(Permission.FLAGS.KICK_MEMBERS) ||
-    //message.member.id == bot.ownerID
-  //) {
 
     if(command.category === "Admin" && !message.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
       return message.reply("You don't have permissions to use this command - Moderators + Admins Only")
@@ -161,29 +156,18 @@ bot.on('messageCreate', message => {
       message.reply('ah ive lost the fucking command sorry');
     }
   }
-//}
 );
 
 //IM DOING STUFF
 function funnyMessage(commandMessage) {
-  
-  if (serverData[commandMessage.guild.id].imDoingFeature == null) {
-    serverData[commandMessage.guild.id].imDoingFeature = false;
-    fs.writeFile(
-      serverPath,
-      JSON.stringify(serverData, null, "\t"),
-      err => {
-        console.log(serverData);
-        console.error(err);
-      }
-    );
-    return;
-  }
 
+  //Bruh react
   if (commandMessage.content == "bruh") commandMessage.react('891716288576122910');
 
+  //Catch imdoing if not enabled
   if (!serverData[commandMessage.guild.id].imDoingFeature) return;
 
+  //Catch imdoing if enabled
   if ((commandMessage.content.startsWith("im doing") || commandMessage.content.startsWith("i'm doing"))) {
     var urmom = commandMessage.content;
     urmom = urmom.replace("doing ", "");;
