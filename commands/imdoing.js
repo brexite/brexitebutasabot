@@ -20,25 +20,31 @@ module.exports = {
 
       switch (action) {
         case "enable":
+          if(serverData[message.guild.id].imDoingFeature){
+            message.reply("I'm Doing Stuff is already enabled!")
+            break;
+          }
           serverData[message.guild.id].imDoingFeature = true;
             fs.writeFile(
               serverPath,
               JSON.stringify(serverData, null, "\t"),
               err => {
-                console.log(serverData);
                 console.error(err);
               }
             );
-            message.reply("I'm Doing Stuff is enabled!");
+            message.reply("I'm Doing Stuff is enabled! Try saying ''I'm Doing Stuff'' and see what happens!");
           break;
 
         case "disable":
+          if(!serverData[message.guild.id].imDoingFeature){
+            message.reply("I'm Doing Stuff is already disabled!")
+            break;
+          }
             serverData[message.guild.id].imDoingFeature = false;
             fs.writeFile(
               serverPath,
               JSON.stringify(serverData, null, "\t"),
               err => {
-                console.log(serverData);
                 console.error(err);
               }
             );
