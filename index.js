@@ -69,8 +69,11 @@ setInterval(function () {
 
   for(var key in serverData) {
       var serverId = key
-      var channelName = serverData[key].memberCountChannelName
-      var channelId = serverData[key].memberCountChannelId
+      var channelName = serverData[serverId].memberCountChannelName
+      var channelId = serverData[serverId].memberCountChannelId
+
+      var ayoChannelName = serverData[serverId].ayoCountChannelName
+      var ayoChannelId = serverData[serverId].ayoCountChannelId
 
       if (channelId){
 
@@ -83,6 +86,18 @@ setInterval(function () {
 
         console.log("Updating " + serverId + " to " + memberCount + " members");
       }
+
+      if (ayoChannelId){
+
+        var guild = bot.guilds.cache.get(serverId)
+        var ayoCount = serverData['818451050729177100'].ayoCount;
+        var ayoCountChannel = bot.channels.cache.get(ayoChannelId);
+
+        ayoChannelName = ayoChannelName.replace("${c}", ayoCount);
+        ayoCountChannel.setName(ayoChannelName)
+
+        console.log("Updating " + serverId + " to " + ayoCount + " ayos");
+      }      
   }
  }, 1001 * 60 * 30);  //approx 30 mins
 
@@ -105,7 +120,22 @@ bot.on('messageCreate', message => {
       vcChannel:[],
       vcRole:[]
     };
-  } 
+  }
+  
+  if (message.guild && message.channel.id === "819315870735007794") {
+    if (message.content == "<:ayo:923313397855035513>") {
+      serverData[message.guild.id].ayoCount += 1;
+
+      fs.writeFile(
+        serverPath,
+        JSON.stringify(serverData, null, "\t"),
+        err => {
+            console.error(err);
+        }
+      );
+      console.log(`Updated ayo count to ${serverData[message.guild.id].ayoCount}`)
+    }
+  }
 
   const args = message.content.slice(prefix.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
