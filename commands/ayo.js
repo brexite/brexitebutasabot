@@ -45,9 +45,7 @@ module.exports = {
                     break;
 
                 case "update":
-                    console.log(args[1])
-                    console.log(parseInt(args[1]))
-                    if(args[1] && typeof args[1] === 'number') {
+                    if(args[1] && parseInt(args[1]) != NaN) {
                         serverData["818451050729177100"].ayoCount = args[1];
                         return message.reply(`Count has been updated to ${args[1]}!`)
                     } else {
