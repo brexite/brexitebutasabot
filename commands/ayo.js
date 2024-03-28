@@ -45,12 +45,12 @@ module.exports = {
                     break;
 
                 case "update":
-                    if(args[1]) {
-                        serverData["818451050729177100"].ayoCount = args[1]
+                    if(args[1] && typeof args[1] === 'number') {
+                        serverData["818451050729177100"].ayoCount = args[1];
+                        return message.reply(`Count has been updated to ${args[1]}!`)
                     } else {
                         return message.reply(`A count has not been specified. Use "${process.env.PREFIX}ayo update [number]".`)
                     }
-                    // Fall through to case refresh
 
                 case "refresh":
 

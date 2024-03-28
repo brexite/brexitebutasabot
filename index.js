@@ -89,7 +89,6 @@ setInterval(function () {
 
       if (ayoChannelId){
 
-        var guild = bot.guilds.cache.get(serverId)
         var ayoCount = serverData['818451050729177100'].ayoCount;
         var ayoCountChannel = bot.channels.cache.get(ayoChannelId);
 
@@ -133,7 +132,23 @@ bot.on('messageCreate', message => {
             console.error(err);
         }
       );
-      console.log(`Updated ayo count to ${serverData[message.guild.id].ayoCount}`)
+
+      for(var key in serverData) {
+        var serverId = key
+        var ayoChannelName = serverData[serverId].ayoCountChannelName
+        var ayoChannelId = serverData[serverId].ayoCountChannelId
+  
+        if (ayoChannelId){
+  
+          var ayoCount = serverData['818451050729177100'].ayoCount;
+          var ayoCountChannel = bot.channels.cache.get(ayoChannelId);
+  
+          ayoChannelName = ayoChannelName.replace("${c}", ayoCount);
+          ayoCountChannel.setName(ayoChannelName)
+  
+          console.log("Updating " + serverId + " to " + ayoCount + " ayos");
+        }      
+    }
     }
   }
 
