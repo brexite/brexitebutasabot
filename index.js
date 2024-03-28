@@ -148,7 +148,8 @@ bot.on('messageCreate', message => {
   
           console.log("Updating " + serverId + " to " + ayoCount + " ayos");
         }      
-    }
+      }
+      return;
     }
   }
 
