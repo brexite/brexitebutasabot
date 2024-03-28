@@ -132,23 +132,6 @@ bot.on('messageCreate', message => {
             console.error(err);
         }
       );
-
-      for(var key in serverData) {
-        var serverId = key
-        var ayoChannelName = serverData[serverId].ayoCountChannelName
-        var ayoChannelId = serverData[serverId].ayoCountChannelId
-  
-        if (ayoChannelId){
-  
-          var ayoCount = serverData['818451050729177100'].ayoCount;
-          var ayoCountChannel = bot.channels.cache.get(ayoChannelId);
-  
-          ayoChannelName = ayoChannelName.replace("${c}", ayoCount);
-          ayoCountChannel.setName(ayoChannelName)
-  
-          console.log("Updating " + serverId + " to " + ayoCount + " ayos");
-        }      
-      }
       return;
     }
   }
