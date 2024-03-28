@@ -46,7 +46,7 @@ module.exports = {
 
                 case "update":
                     if(args[1] && parseInt(args[1]) != NaN) {
-                        serverData["818451050729177100"].ayoCount = args[1];
+                        serverData["818451050729177100"].ayoCount = parseInt(args[1]);
                         return message.reply(`Count has been updated to ${args[1]}!`)
                     } else {
                         return message.reply(`A count has not been specified. Use "${process.env.PREFIX}ayo update [number]".`)
