@@ -98,7 +98,7 @@ setInterval(function () {
         console.log("Updating " + serverId + " to " + ayoCount + " ayos");
       }      
   }
- }, 1001 * 60 * 30);  //approx 30 mins
+ }, 1001 * 60 * 6);  //approx 6 mins
 
 //MSG Catch
 bot.on('messageCreate', message => {
