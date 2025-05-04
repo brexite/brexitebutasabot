@@ -1,15 +1,15 @@
-const ballJSON = require("../assets/8ball.json");
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const ballJSON = require("../../assets/8ball.json");
 const ballArray = ballJSON["outcomes"];
 
-const { MessageEmbed } = require('discord.js');
-
 module.exports = {
-	name: "8ball",
-	description: "Ask The Magic 8 Ball (Patent Pending) anything",
-	usage: "8ball (question)",
-	category: "Fun",
-  execute: async (bot, message, args) => {
+    data: new SlashCommandBuilder()
+        .setName('8ball')
+        .setDescription('Ask The Magic 8 Ball (Patent Pending) anything.'),
+    async execute(interaction) {
 
+	let member = interaction.user;
+	let guildMember = await interaction.guild.members.fetch(member.id);
 	//Replies can have types: (+)pos, (-)neg, (+-)neutral, (?)images, (!)rude
 
 	posCol = '#007000';
@@ -17,13 +17,13 @@ module.exports = {
 	neuCol = '#FFBF00';
 	rudeCol = '#551A8B';
 
-	const ballEmbed = new MessageEmbed()
+	const ballEmbed = new EmbedBuilder()
 	// .setColor('#0099ff')
-	.setAuthor('✨🔮 The Magic 8 Ball (Patent Pending) says... ✨🔮')
+	.setAuthor({name: '✨🔮 The Magic 8 Ball (Patent Pending) says... ✨🔮'})
 	// .setImage('https://i.imgur.com/AfFp7pu.png')
 	// .setThumbnail('')
 	// .setTimestamp()
-	.setFooter(message.member.user.tag + " | " + message.guild.name, message.member.user.avatarURL({ dynamic:true }));
+        .setFooter({text: member.tag + " | " + guildMember.nickname, iconUrl: member.avatarURL()});
 
 	let chosen = ballArray[Math.floor(Math.random()*ballArray.length)]
 
@@ -47,6 +47,6 @@ module.exports = {
 			break;
 	}
 
-    message.reply({ embeds: [ballEmbed] });
-  }
+    interaction.reply({ embeds: [ballEmbed] });
+    },
 };
